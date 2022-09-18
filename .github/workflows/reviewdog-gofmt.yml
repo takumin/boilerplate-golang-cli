@@ -1,8 +1,12 @@
 name: Reviewdog (gofmt)
 on:
+  push:
+    branches:
+    - 'main'
   pull_request:
     paths:
     - '.github/actions/setup-aqua/action.yaml'
+    - '.github/actions/setup-reviewdog/action.yaml'
     - '.github/actions/setup-go/action.yaml'
     - '.github/dependency/actions-cache-version'
     - '.github/workflows/reviewdog-gofmt.yml'
@@ -10,6 +14,7 @@ on:
     - '.reviewdog.yml'
     - '**.go'
 permissions:
+  checks: write
   contents: read
   pull-requests: write
 jobs:
@@ -24,7 +29,10 @@ jobs:
       uses: ./.github/actions/setup-go
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
+    - name: Setup Reviewdog
+      id: reviewdog
+      uses: ./.github/actions/setup-reviewdog
     - name: Reviewdog
-      run: reviewdog -reporter 'github-pr-review' -runners 'gofmt' -diff 'git diff FETCH_HEAD'
+      run: reviewdog -runners 'gofmt' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}

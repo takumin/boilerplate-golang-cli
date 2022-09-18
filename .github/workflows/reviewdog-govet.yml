@@ -1,8 +1,12 @@
 name: Reviewdog (govet)
 on:
+  push:
+    branches:
+    - 'main'
   pull_request:
     paths:
     - '.github/actions/setup-aqua/action.yaml'
+    - '.github/actions/setup-reviewdog/action.yaml'
     - '.github/actions/setup-go/action.yaml'
     - '.github/dependency/actions-cache-version'
     - '.github/workflows/reviewdog-govet.yml'
@@ -12,6 +16,7 @@ on:
     - 'go.sum'
     - '**.go'
 permissions:
+  checks: write
   contents: read
   pull-requests: write
 jobs:
@@ -24,9 +29,15 @@ jobs:
       uses: actions/checkout@v3
     - name: Setup Go
       uses: ./.github/actions/setup-go
+      with:
+        cache: true
+        cache-key: vet
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
+    - name: Setup Reviewdog
+      id: reviewdog
+      uses: ./.github/actions/setup-reviewdog
     - name: Reviewdog
-      run: reviewdog -reporter 'github-pr-review' -runners 'govet' -diff 'git diff FETCH_HEAD'
+      run: reviewdog -runners 'govet' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD'
       env:
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
