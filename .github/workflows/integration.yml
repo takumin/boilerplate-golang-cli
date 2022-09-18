@@ -1,6 +1,8 @@
 name: CI
 on:
   push:
+    branches:
+    - 'master'
     paths:
     # Build
     - 'Makefile'
@@ -16,7 +18,7 @@ on:
     - '**.go'
     - 'go.mod'
     - 'go.sum'
-  workflow_dispatch:
+  pull_request:
 permissions:
   contents: read
 jobs:
