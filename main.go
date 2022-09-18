@@ -13,7 +13,7 @@ import (
 
 var (
 	AppName  string = "boilerplate-golang-cli"
-	Usage    string = "boilerplate golang cli"
+	AppDesc  string = "boilerplate golang cli"
 	Version  string = "unknown"
 	Revision string = "unknown"
 )
@@ -38,7 +38,7 @@ func main() {
 
 	app := &cli.App{
 		Name:                 AppName,
-		Usage:                Usage,
+		Usage:                AppDesc,
 		Version:              fmt.Sprintf("%s (%s)", Version, Revision),
 		Flags:                flags,
 		Commands:             cmds,
