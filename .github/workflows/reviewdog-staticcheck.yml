@@ -11,6 +11,9 @@ on:
     - 'go.mod'
     - 'go.sum'
     - '**.go'
+permissions:
+  contents: read
+  pull-requests: write
 jobs:
   ci:
     name: CI

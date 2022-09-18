@@ -9,6 +9,9 @@ on:
     - '.reviewdog.yml'
     - '**.sh'
     - '**.bash'
+permissions:
+  contents: read
+  pull-requests: write
 jobs:
   ci:
     name: CI
