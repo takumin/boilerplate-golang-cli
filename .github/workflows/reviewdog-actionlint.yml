@@ -18,11 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Setup Aqua
-      uses: ./.github/actions/setup-aqua
-    - name: Reviewdog
-      run: reviewdog -reporter 'github-pr-review' -runners 'actionlint' -diff 'git diff FETCH_HEAD'
-      env:
-        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Aqua
+        uses: ./.github/actions/setup-aqua
+      - name: Reviewdog
+        run: reviewdog -reporter 'github-pr-review' -runners 'actionlint' -diff 'git diff FETCH_HEAD'
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
