@@ -6,8 +6,9 @@ runner:
     cmd: shellcheck -f checkstyle $(find '.' -type f -a \( -name '*.sh' -o -name '*.bash' \) -print)
     format: checkstyle
   yamllint:
-    cmd: yamllint .
-    format: yamllint
+    cmd: yamllint --format parsable .
+    errorformat:
+    - '%f:%l:%c: %m'
   actionlint:
     cmd: actionlint -oneline
     errorformat:
