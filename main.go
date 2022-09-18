@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	AppName  string = "boilerplate-golang-cli-appname"
-	AppDesc  string = "boilerplate-golang-cli-appdesc"
+	AppName  string = "boilerplate-golang-cli"      // ###BOILERPLATE_APP_NAME###
+	AppDesc  string = "Boilerplate Golang CLI Tool" // ###BOILERPLATE_APP_DESC###
 	Version  string = "unknown"
 	Revision string = "unknown"
 )
