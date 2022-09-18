@@ -1,8 +1,6 @@
 name: Reviewdog (gosec)
 on:
-  push:
-    branches:
-    - 'main'
+  workflow_call:
   pull_request:
     paths:
     - '.github/actions/setup-aqua/action.yaml'
