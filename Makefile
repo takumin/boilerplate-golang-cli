@@ -19,6 +19,14 @@ BUILDFLAGS       := -trimpath -ldflags '$(LDFLAGS)'
 .PHONY: all
 all: clean tools generate lint sec vet test build
 
+.PHONY: docs
+docs:
+	mdbook build
+
+.PHONY: docs-serve
+docs-serve:
+	mdbook serve -o
+
 .PHONY: tools
 tools:
 	aqua install --all
@@ -66,3 +74,4 @@ endif
 clean:
 	rm -rf bin
 	rm -rf dist
+	rm -rf book
