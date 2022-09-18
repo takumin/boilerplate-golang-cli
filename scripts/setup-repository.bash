@@ -2,10 +2,6 @@
 
 set -euo pipefail
 
-if [ ! -x "$(command -v go-imports-rename)" ]; then
-	go install github.com/sirkon/go-imports-rename@latest
-fi
-
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$(dirname "${SCRIPT_DIR}/../..")" && pwd)"
 
