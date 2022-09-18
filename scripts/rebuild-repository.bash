@@ -18,5 +18,5 @@ GITHUB_REPOS="${GITHUB_NAME_WITH_OWNER##*/}"
 ORIGIN_PKG="github.com/takumin/boilerplate-golang-cli"
 PROJECT_PKG="github.com/${GITHUB_OWNER}/${GITHUB_REPOS}"
 
-go mod edit -module "${PROJECT_NAME}"
+go mod edit -module "${PROJECT_PKG}"
 go-imports-rename -s "${ORIGIN_PKG} => ${PROJECT_PKG}"
