@@ -1,0 +1,32 @@
+name: Setup Repository
+on:
+  push:
+permissions:
+  contents: write
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ !startsWith(github.repository, 'takumin/boilerplate') }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup Go
+      uses: actions/setup-go@v3
+    - name: Setup Repository
+      run: ./scripts/setup-repository.bash
+    - name: Cleanup Boilerplate
+      run: |
+        rm .github/workflows/setup-repository.yml
+        rm scripts/setup-repository.bash
+    - name: Reinitialize Repository
+      shell: bash
+      run: |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        git add .
+        git commit -m 'Reinitialize commit'
+        git push

@@ -39,5 +39,3 @@ sed -i -E "s@${ORIGIN_DESCRIPTION}@${GITHUB_DESCRIPTION}@" README.md
 sed -i -E "s@${ORIGIN_URL}@${GITHUB_URL}@" book.toml
 sed -i -E "s@${ORIGIN_REPOSITORY}@${GITHUB_REPOSITORY}@" book.toml
 sed -i -E "s@${ORIGIN_DESCRIPTION}@${GITHUB_DESCRIPTION}@" book.toml
-
-rm "$0"
