@@ -3,9 +3,9 @@ on:
   workflow_call:
   pull_request:
     paths:
+    - '.github/actions/setup-go/action.yaml'
     - '.github/actions/setup-aqua/action.yaml'
     - '.github/actions/setup-reviewdog/action.yaml'
-    - '.github/actions/setup-go/action.yaml'
     - '.github/dependency/actions-cache-version'
     - '.github/workflows/reviewdog-govet.yml'
     - '.aqua.yaml'

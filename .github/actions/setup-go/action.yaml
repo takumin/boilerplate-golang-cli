@@ -10,11 +10,15 @@ inputs:
   cache:
     description: actions cache enabled
     required: false
-    default: false
+    default: true
   cache-key:
     description: actions cache key
     required: false
-    default: ci
+    default: min
+  check-latest:
+    description: check latest version
+    required: false
+    default: false
 runs:
   using: composite
   steps:
@@ -25,7 +29,7 @@ runs:
     uses: actions/setup-go@v3
     with:
       go-version-file: ${{ inputs.go-mod }}
-      check-latest: true
+      check-latest: ${{ inputs.check-latest }}
   ################################################################################
   # Go Env
   ################################################################################
