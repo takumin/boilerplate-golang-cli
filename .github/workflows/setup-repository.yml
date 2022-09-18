@@ -18,6 +18,8 @@ jobs:
       uses: actions/setup-go@v3
     - name: Setup Repository
       run: ./scripts/setup-repository.bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Cleanup Boilerplate
       run: |
         rm .github/workflows/setup-repository.yml
