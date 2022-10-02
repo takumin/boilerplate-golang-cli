@@ -8,6 +8,7 @@ import (
 	"github.com/urfave/cli/v2"
 
 	"github.com/takumin/boilerplate-golang-cli/internal/command/completion"
+	"github.com/takumin/boilerplate-golang-cli/internal/command/subcommand"
 	"github.com/takumin/boilerplate-golang-cli/internal/config"
 )
 
@@ -34,6 +35,7 @@ func main() {
 
 	cmds := []*cli.Command{
 		completion.NewCommands(cfg, flags),
+		subcommand.NewCommands(cfg, flags),
 	}
 
 	app := &cli.App{
