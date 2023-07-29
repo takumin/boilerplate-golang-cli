@@ -16,7 +16,7 @@ runs:
       "push" )                echo "status=true" >> $GITHUB_OUTPUT ;;
       "pull_request" )        echo "status=true" >> $GITHUB_OUTPUT ;;
       "pull_request_target" ) echo "status=true" >> $GITHUB_OUTPUT ;;
-      * )                     echo "status=true" >> $GITHUB_OUTPUT ;;
+      * )                     echo "status=false" >> $GITHUB_OUTPUT ;;
       esac
   - name: Reviewdog Reporter Type
     id: reporter
