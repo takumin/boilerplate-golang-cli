@@ -4,7 +4,7 @@ runs:
   - name: Cache Directory
     id: cache-dir
     shell: bash
-    run: echo "::set-output name=aqua::${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}"
+    run: echo "aqua=${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}" >> $GITHUB_OUTPUT
   - name: Aqua Tools Cache
     uses: actions/cache@v3
     with:

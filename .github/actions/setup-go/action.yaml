@@ -38,8 +38,8 @@ runs:
     id: goenv
     shell: bash
     run: |
-      echo "::set-output name=GOCACHE::$(go env GOCACHE)"
-      echo "::set-output name=GOMODCACHE::$(go env GOMODCACHE)"
+      echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_OUTPUT
+      echo "GOMODCACHE=$(go env GOMODCACHE)" >> $GITHUB_OUTPUT
   ################################################################################
   # Cache Key
   ################################################################################
@@ -47,7 +47,7 @@ runs:
     if: ${{ inputs.cache == 'true' }}
     id: cache-key
     shell: bash
-    run: echo "::set-output name=name::${{ runner.os }}-go-${{ inputs.cache-key }}"
+    run: echo "name=${{ runner.os }}-go-${{ inputs.cache-key }}" >> $GITHUB_OUTPUT
   ################################################################################
   # Go Build Cache
   ################################################################################
