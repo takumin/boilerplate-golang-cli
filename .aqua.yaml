@@ -1,10 +1,8 @@
----
 # aqua - Declarative CLI Version Manager
 # https://aquaproj.github.io/
 registries:
 - type: standard
   ref: v4.31.0 # renovate: depName=aquaproj/aqua-registry
-
 packages:
 - name: dominikh/go-tools/staticcheck@2023.1.3
 - name: goreleaser/goreleaser@v1.19.2
@@ -16,3 +14,4 @@ packages:
 - name: rust-lang/mdBook@v0.4.32
 - name: takumin/gjson@v0.0.2
 - name: aquasecurity/trivy@v0.43.1
+- name: google/yamlfmt@v0.9.0
