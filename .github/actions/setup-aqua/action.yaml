@@ -17,4 +17,4 @@ runs:
     uses: aquaproj/aqua-installer@v2.1.2
     with:
       aqua_version: v2.10.1
-      aqua_opts: -a
+      aqua_opts: -l
