@@ -10,7 +10,7 @@ inputs:
   cache:
     description: actions cache enabled
     required: false
-    default: true
+    default: false
   check-latest:
     description: check latest version
     required: false

@@ -36,6 +36,7 @@ jobs:
     - name: Setup Go
       uses: ./.github/actions/setup-go
       with:
+        cache: true
         check-latest: true
     ################################################################################
     # Setup Aqua
