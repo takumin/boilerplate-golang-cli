@@ -9,7 +9,7 @@ runs:
     uses: actions/cache@v3
     with:
       path: ${{ steps.cache-dir.outputs.aqua }}
-      key: ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}-${{ hashFiles('**/actions-cache-version') }}
+      key: ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}
       restore-keys: |
         ${{ runner.os }}-aqua-tools-${{ hashFiles('**/.aqua.yaml') }}-
         ${{ runner.os }}-aqua-tools-

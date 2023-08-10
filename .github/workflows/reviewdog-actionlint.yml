@@ -3,7 +3,6 @@ on:
   workflow_call:
   pull_request:
     paths:
-    - '.github/dependency/actions-cache-version'
     - '.aqua.yaml'
     - '.reviewdog.yml'
     - '.github/actions/*.yml'
