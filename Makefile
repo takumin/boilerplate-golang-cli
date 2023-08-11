@@ -59,7 +59,8 @@ lint:
 
 .PHONY: test
 test:
-	CGO_ENABLED=0 go test ./...
+	go test -cover -coverprofile=cover.out ./...
+	go tool cover -html=cover.out -o cover.html
 
 .PHONY: build
 build: bin/$(APPNAME)
