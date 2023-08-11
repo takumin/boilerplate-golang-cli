@@ -65,6 +65,7 @@ test:
 cover:
 	go test -cover -coverprofile=cover.out ./...
 	go tool cover -html=cover.out -o cover.html
+	octocov
 
 .PHONY: build
 build: bin/$(APPNAME)
