@@ -2,7 +2,6 @@ package zsh
 
 import (
 	"html/template"
-	"os"
 	"strings"
 
 	"github.com/urfave/cli/v2"
@@ -46,7 +45,7 @@ func NewCommands(cfg *config.Config, flags []cli.Flag) *cli.Command {
 			if err != nil {
 				return err
 			}
-			if err = t.Execute(os.Stdout, ctx.App.Name); err != nil {
+			if err = t.Execute(ctx.App.Writer, ctx.App.Name); err != nil {
 				return err
 			}
 			return nil
