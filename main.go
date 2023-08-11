@@ -13,6 +13,7 @@ import (
 )
 
 var (
+	Author   string = "Takumi Takahashi"            // ###BOILERPLATE_AUTHOR###
 	AppName  string = "boilerplate-golang-cli"      // ###BOILERPLATE_APP_NAME###
 	AppDesc  string = "Boilerplate Golang CLI Tool" // ###BOILERPLATE_APP_DESC###
 	Version  string = "unknown"
@@ -42,6 +43,7 @@ func main() {
 		Name:                 AppName,
 		Usage:                AppDesc,
 		Version:              fmt.Sprintf("%s (%s)", Version, Revision),
+		Authors:              []*cli.Author{{Name: Author}},
 		Flags:                flags,
 		Commands:             cmds,
 		EnableBashCompletion: true,
