@@ -3,7 +3,7 @@
 [book]
 title = "boilerplate-golang-cli"
 description = "Boilerplate Golang CLI Tool"
-authors = ["takumin"]
+authors = ["Takumi Takahashi"]
 src = "docs"
 language = "ja"
 multilingual = false
