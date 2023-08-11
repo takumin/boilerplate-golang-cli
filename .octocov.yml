@@ -1,7 +1,7 @@
 coverage:
   if: true
   paths:
-  - cover.out
+  - coverage.out
 codeToTestRatio:
   code:
   - '**/*.go'

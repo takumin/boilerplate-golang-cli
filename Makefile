@@ -61,10 +61,10 @@ lint:
 test:
 	go test ./...
 
-.PHONY: cover
-cover:
-	go test -cover -coverprofile=cover.out ./...
-	go tool cover -html=cover.out -o cover.html
+.PHONY: coverage
+coverage:
+	go test -cover -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out -o coverage.html
 	octocov
 
 .PHONY: build
