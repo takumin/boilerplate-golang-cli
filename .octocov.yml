@@ -1,18 +1,18 @@
 coverage:
   if: true
   paths:
-    - cover.out
+  - cover.out
 codeToTestRatio:
   code:
-    - '**/*.go'
-    - '!**/*_test.go'
+  - '**/*.go'
+  - '!**/*_test.go'
   test:
-    - '**/*_test.go'
+  - '**/*_test.go'
 testExecutionTime:
   if: true
 diff:
   datastores:
-    - artifact://${GITHUB_REPOSITORY}
+  - artifact://${GITHUB_REPOSITORY}
 comment:
   if: is_pull_request
 summary:
@@ -20,4 +20,4 @@ summary:
 report:
   if: is_default_branch
   datastores:
-    - artifact://${GITHUB_REPOSITORY}
+  - artifact://${GITHUB_REPOSITORY}
