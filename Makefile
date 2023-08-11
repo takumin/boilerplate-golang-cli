@@ -62,10 +62,15 @@ test:
 	go test ./...
 
 .PHONY: coverage
-coverage:
+coverage: coverage.out coverage.html
+coverage.out: $(SRCS)
 	go test -cover -coverprofile=coverage.out ./...
+coverage.html: coverage.out
 	go tool cover -html=coverage.out -o coverage.html
-	octocov
+
+.PHONY: octocov
+octocov: coverage.out
+	octocov ls-files
 
 .PHONY: build
 build: bin/$(APPNAME)
@@ -91,3 +96,5 @@ clean:
 	rm -rf bin
 	rm -rf dist
 	rm -rf book
+	rm -f coverage.out
+	rm -f coverage.html
