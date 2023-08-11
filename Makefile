@@ -70,7 +70,7 @@ coverage.html: coverage.out
 
 .PHONY: octocov
 octocov: coverage.out
-	octocov ls-files
+	octocov
 
 .PHONY: build
 build: bin/$(APPNAME)
