@@ -44,3 +44,6 @@ sed -i -E "s@${ORIGIN_OWNER}@${GITHUB_OWNER}@" book.toml
 sed -i -E "s@${ORIGIN_AUTHOR}@${GITHUB_AUTHOR}@" book.toml
 sed -i -E "s@${ORIGIN_REPOSITORY}@${GITHUB_REPOSITORY}@" book.toml
 sed -i -E "s@${ORIGIN_DESCRIPTION}@${GITHUB_DESCRIPTION}@" book.toml
+
+sed -i -E "s@\[yyyy\]@$(date "+%Y")@" LICENSE
+sed -i -E "s@\[name of copyright owner\]@${GITHUB_AUTHOR}@" LICENSE
