@@ -41,11 +41,8 @@ func NewCommands(cfg *config.Config, flags []cli.Flag) *cli.Command {
 		Usage:    "zsh completion",
 		HideHelp: true,
 		Action: func(ctx *cli.Context) error {
-			t, err := template.New("zshCompletion").Parse(strings.TrimSpace(zshCompletion) + "\n")
-			if err != nil {
-				return err
-			}
-			if err = t.Execute(ctx.App.Writer, ctx.App.Name); err != nil {
+			t := template.Must(template.New("zshCompletion").Parse(strings.TrimSpace(zshCompletion) + "\n"))
+			if err := t.Execute(ctx.App.Writer, ctx.App.Name); err != nil {
 				return err
 			}
 			return nil
