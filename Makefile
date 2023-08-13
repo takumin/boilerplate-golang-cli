@@ -68,10 +68,6 @@ coverage.out: $(SRCS)
 coverage.html: coverage.out
 	go tool cover -html=coverage.out -o coverage.html
 
-.PHONY: octocov
-octocov: coverage.out
-	octocov ls-files
-
 .PHONY: build
 build: bin/$(APPNAME)
 bin/$(APPNAME): $(SRCS)
