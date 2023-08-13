@@ -33,3 +33,18 @@ func TestNewCommands(t *testing.T) {
 		t.Error("expected fish completion output to be non-empty, but got empty")
 	}
 }
+
+func TestNewCommandsFailed(t *testing.T) {
+	var stdout, stderr bytes.Buffer
+	app := &cli.App{Writer: &stdout, ErrWriter: &stderr}
+	app.Setup()
+	ctx := cli.NewContext(app, nil, nil)
+	cmd := fish.NewCommands(config.NewConfig(), []cli.Flag{})
+
+	// Referenced by ToFishCompletion() function.
+	cli.FishCompletionTemplate = `{{.}`
+
+	if err := cmd.Run(ctx); err == nil {
+		t.Error("expected fish completion result to be failed, but got succeeded")
+	}
+}
