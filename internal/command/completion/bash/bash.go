@@ -37,10 +37,7 @@ func NewCommands(cfg *config.Config, flags []cli.Flag) *cli.Command {
 		HideHelp: true,
 		Action: func(ctx *cli.Context) error {
 			t := template.Must(template.New("bashCompletion").Parse(strings.TrimSpace(bashCompletion) + "\n"))
-			if err := t.Execute(ctx.App.Writer, ctx.App.Name); err != nil {
-				return err
-			}
-			return nil
+			return t.Execute(ctx.App.Writer, ctx.App.Name)
 		},
 	}
 }
