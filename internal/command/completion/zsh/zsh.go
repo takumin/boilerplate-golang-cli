@@ -1,8 +1,8 @@
 package zsh
 
 import (
-	"html/template"
 	"strings"
+	"text/template"
 
 	"github.com/urfave/cli/v2"
 
