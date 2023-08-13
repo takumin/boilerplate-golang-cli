@@ -1,25 +1,23 @@
 coverage:
-  if: true
   paths:
   - coverage.out
 codeToTestRatio:
-  if: true
   code:
   - '**/*.go'
   - '!**/*_test.go'
   test:
   - '**/*_test.go'
 testExecutionTime:
-  if: true
 summary:
-  if: true
+  hideFooterLink: true
+body:
+  hideFooterLink: true
 comment:
   if: is_pull_request
+  hideFooterLink: true
 diff:
-  if: is_pull_request
   datastores:
   - artifact://${GITHUB_REPOSITORY}
 report:
-  if: is_pull_request
   datastores:
   - artifact://${GITHUB_REPOSITORY}
