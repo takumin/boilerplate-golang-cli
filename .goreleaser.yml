@@ -16,6 +16,7 @@ builds:
   - -trimpath
   ldflags:
   - -s -w
+  - -buildid=
   - -X main.AppName={{ .ProjectName }}
   - -X {{ .ModulePath }}/internal/version.version={{ .Version }}
   - -X {{ .ModulePath }}/internal/version.revision={{ .FullCommit }}
