@@ -10,14 +10,13 @@ import (
 	"github.com/takumin/boilerplate-golang-cli/internal/command/completion"
 	"github.com/takumin/boilerplate-golang-cli/internal/command/subcommand"
 	"github.com/takumin/boilerplate-golang-cli/internal/config"
+	"github.com/takumin/boilerplate-golang-cli/internal/version"
 )
 
 var (
-	Author   string = "Takumi Takahashi"            // ###BOILERPLATE_AUTHOR###
-	AppName  string = "boilerplate-golang-cli"      // ###BOILERPLATE_APP_NAME###
-	AppDesc  string = "Boilerplate Golang CLI Tool" // ###BOILERPLATE_APP_DESC###
-	Version  string = "unknown"
-	Revision string = "unknown"
+	Author  string = "Takumi Takahashi"            // ###BOILERPLATE_AUTHOR###
+	AppName string = "boilerplate-golang-cli"      // ###BOILERPLATE_APP_NAME###
+	AppDesc string = "Boilerplate Golang CLI Tool" // ###BOILERPLATE_APP_DESC###
 )
 
 func main() {
@@ -42,7 +41,7 @@ func main() {
 	app := &cli.App{
 		Name:                 AppName,
 		Usage:                AppDesc,
-		Version:              fmt.Sprintf("%s (%s)", Version, Revision),
+		Version:              fmt.Sprintf("%s (%s)", version.Version(), version.Revision()),
 		Authors:              []*cli.Author{{Name: Author}},
 		Flags:                flags,
 		Commands:             cmds,
