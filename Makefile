@@ -1,4 +1,5 @@
 APPNAME  := $(shell basename $(CURDIR))
+PKGNAME  := $(shell go mod edit -json | jq -r '.Module.Path')
 VERSION  := $(shell git describe --abbrev=0 --tags 2>/dev/null)
 REVISION := $(shell git rev-parse HEAD 2>/dev/null)
 
@@ -13,8 +14,8 @@ endif
 SRCS := $(shell find . -type f -name '*.go')
 
 LDFLAGS_APPNAME  := -X "main.AppName=$(APPNAME)"
-LDFLAGS_VERSION  := -X "main.Version=$(VERSION)"
-LDFLAGS_REVISION := -X "main.Revision=$(REVISION)"
+LDFLAGS_VERSION  := -X "$(PKGNAME)/internal/version.version=$(VERSION)"
+LDFLAGS_REVISION := -X "$(PKGNAME)/internal/version.revision=$(REVISION)"
 LDFLAGS          := -s -w -buildid= $(LDFLAGS_APPNAME) $(LDFLAGS_VERSION) $(LDFLAGS_REVISION) -extldflags -static
 BUILDFLAGS       := -trimpath -ldflags '$(LDFLAGS)'
 
