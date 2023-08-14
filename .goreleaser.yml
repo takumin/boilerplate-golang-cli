@@ -17,7 +17,7 @@ builds:
   ldflags:
   - -s -w
   - -buildid=
-  - -X main.AppName={{ .ProjectName }}
+  - -X {{ .ModulePath }}/internal/metadata.AppName={{ .ProjectName }}
   - -X {{ .ModulePath }}/internal/version.version={{ .Version }}
   - -X {{ .ModulePath }}/internal/version.revision={{ .FullCommit }}
   - -extldflags -static

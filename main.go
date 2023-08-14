@@ -10,13 +10,8 @@ import (
 	"github.com/takumin/boilerplate-golang-cli/internal/command/completion"
 	"github.com/takumin/boilerplate-golang-cli/internal/command/subcommand"
 	"github.com/takumin/boilerplate-golang-cli/internal/config"
+	"github.com/takumin/boilerplate-golang-cli/internal/metadata"
 	"github.com/takumin/boilerplate-golang-cli/internal/version"
-)
-
-var (
-	Author  string = "Takumi Takahashi"            // ###BOILERPLATE_AUTHOR###
-	AppName string = "boilerplate-golang-cli"      // ###BOILERPLATE_APP_NAME###
-	AppDesc string = "Boilerplate Golang CLI Tool" // ###BOILERPLATE_APP_DESC###
 )
 
 func main() {
@@ -39,10 +34,10 @@ func main() {
 	}
 
 	app := &cli.App{
-		Name:                 AppName,
-		Usage:                AppDesc,
+		Name:                 metadata.AppName(),
+		Usage:                metadata.AppDesc(),
 		Version:              fmt.Sprintf("%s (%s)", version.Version(), version.Revision()),
-		Authors:              []*cli.Author{{Name: Author}},
+		Authors:              []*cli.Author{{Name: metadata.AuthorName()}},
 		Flags:                flags,
 		Commands:             cmds,
 		EnableBashCompletion: true,

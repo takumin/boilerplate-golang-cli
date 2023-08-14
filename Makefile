@@ -13,7 +13,7 @@ endif
 
 SRCS := $(shell find . -type f -name '*.go')
 
-LDFLAGS_APPNAME  := -X "main.AppName=$(APPNAME)"
+LDFLAGS_APPNAME  := -X "$(PKGNAME)/internal/metadata.appName=$(APPNAME)"
 LDFLAGS_VERSION  := -X "$(PKGNAME)/internal/version.version=$(VERSION)"
 LDFLAGS_REVISION := -X "$(PKGNAME)/internal/version.revision=$(REVISION)"
 LDFLAGS          := -s -w -buildid= $(LDFLAGS_APPNAME) $(LDFLAGS_VERSION) $(LDFLAGS_REVISION) -extldflags -static
