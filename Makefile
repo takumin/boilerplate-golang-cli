@@ -59,12 +59,12 @@ lint:
 
 .PHONY: test
 test:
-	go test ./...
+	go test -trimpath -cover -covermode atomic ./...
 
 .PHONY: coverage
 coverage: coverage.out coverage.html
 coverage.out: $(SRCS)
-	go test -cover -coverprofile=coverage.out ./...
+	go test -trimpath -cover -covermode atomic -coverprofile=coverage.out ./...
 coverage.html: coverage.out
 	go tool cover -html=coverage.out -o coverage.html
 
