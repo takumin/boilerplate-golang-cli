@@ -1,0 +1,12 @@
+runs:
+  using: composite
+  steps:
+  - name: Get GOVERSION
+    id: goenv
+    shell: bash
+    run: echo "goversion=$(go env GOVERSION)" >> $GITHUB_OUTPUT
+  - name: GolangCI-Lint Cache
+    uses: actions/cache@v3
+    with:
+      path: "${HOME}/.cache/golangci-lint"
+      key: golangci-lint-${{ runner.os }}-${{ steps.goenv.outputs.goversion }}-${{ hashFiles('**/go.sum') }}
