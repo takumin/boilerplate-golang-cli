@@ -2,7 +2,7 @@
 # https://aquaproj.github.io/
 registries:
 - type: standard
-  ref: v4.41.0 # renovate: depName=aquaproj/aqua-registry
+  ref: v4.41.1 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: goreleaser/goreleaser@v1.20.0
 - name: securego/gosec@v2.17.0
