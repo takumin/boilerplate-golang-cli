@@ -24,6 +24,6 @@ runner:
   gosec:
     cmd: gosec -quiet -fmt golint ./...
     format: gosec
-  golangci-lint:
-    cmd: golangci-lint run --out-format=line-number
-    format: golangci-lint
+  staticcheck:
+    cmd: staticcheck ./...
+    format: staticcheck

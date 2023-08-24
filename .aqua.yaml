@@ -4,6 +4,7 @@ registries:
 - type: standard
   ref: v4.41.1 # renovate: depName=aquaproj/aqua-registry
 packages:
+- name: dominikh/go-tools/staticcheck@2023.1.3
 - name: goreleaser/goreleaser@v1.20.0
 - name: securego/gosec@v2.17.0
 - name: reviewdog/reviewdog@v0.14.2
@@ -13,5 +14,4 @@ packages:
 - name: rust-lang/mdBook@v0.4.34
 - name: takumin/gjson@v0.0.2
 - name: aquasecurity/trivy@v0.44.1
-- name: golangci/golangci-lint@v1.54.2
 - name: takumin/gyaml@v0.0.2

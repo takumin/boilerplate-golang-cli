@@ -56,7 +56,7 @@ vuln:
 
 .PHONY: lint
 lint:
-	golangci-lint run
+	staticcheck ./...
 
 .PHONY: test
 test:
