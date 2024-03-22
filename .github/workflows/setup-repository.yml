@@ -10,7 +10,7 @@ jobs:
     name: Run
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: ${{ !startsWith(github.repository, 'takumin/boilerplate') }}
+    if: ${{ !startsWith(github.repository, 'takumin/boilerplate-golang-cli') }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
