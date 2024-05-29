@@ -17,6 +17,7 @@ GITHUB_NAME_WITH_OWNER="$(gh repo view --json nameWithOwner --jq '.nameWithOwner
 GITHUB_OWNER="${GITHUB_NAME_WITH_OWNER%/*}"
 GITHUB_REPOSITORY="${GITHUB_NAME_WITH_OWNER##*/}"
 GITHUB_DESCRIPTION="$(gh repo view --json description --jq '.description')"
+GITHUB_DESCRIPTION="${GITHUB_DESCRIPTION/\&/\\&}"
 
 GITHUB_AUTHOR_NAME="$(gh api "users/${GITHUB_OWNER}" --jq '.name')"
 [[ -z "${GITHUB_AUTHOR_NAME}" ]] && GITHUB_AUTHOR_NAME="${GITHUB_OWNER}"
