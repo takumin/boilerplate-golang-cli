@@ -1,6 +1,12 @@
 name: Reviewdog (staticcheck)
 on:
   workflow_call:
+    inputs:
+      jobname:
+        type: string
+        required: false
+        description: 'A jobname passed from the caller workflow'
+        default: 'reviewdog-staticcheck'
   pull_request:
     paths:
     - '.github/actions/setup-go/action.yaml'
@@ -17,7 +23,7 @@ permissions:
   contents: read
   pull-requests: write
 concurrency:
-  group: ${{ github.workflow_ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
   cancel-in-progress: true
 jobs:
   ci:
