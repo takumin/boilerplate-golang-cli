@@ -42,6 +42,8 @@ sed -i -E "s@${ORIGIN_DESCRIPTION}@${GITHUB_DESCRIPTION}@" README.md
 
 sed -i -E "s@${ORIGIN_URL}@${GITHUB_URL}@" CODE_OF_CONDUCT.md
 
+sed -i -E "s@${ORIGIN_URL}@${GITHUB_URL}@" CONTRIBUTING.md
+
 sed -i -E "s@${ORIGIN_URL}@${GITHUB_URL}@" book.toml
 sed -i -E "s@${ORIGIN_OWNER}@${GITHUB_OWNER}@" book.toml
 sed -i -E "s@${ORIGIN_AUTHOR_NAME}@${GITHUB_AUTHOR_NAME}@" book.toml
