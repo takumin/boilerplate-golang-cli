@@ -17,7 +17,7 @@ The community looks forward to your contributions.
 
 ## Code of Conduct
 
-Everyone contributing to this project agrees to abide by the [Code of Conduct](https://github.com/takumin/boilerplate-golang-cli/blob/main/CODE_OF_CONDUCT.md).
+Everyone contributing to this project agrees to abide by the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Getting Started
 
