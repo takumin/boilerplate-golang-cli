@@ -1,5 +1,6 @@
 /bin/
 /dist/
 /book/
+/node_modules/
 coverage.html
 coverage.out
