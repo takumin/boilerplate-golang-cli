@@ -1,0 +1,24 @@
+name: Setup Bun
+description: Setup Bun by using cache and install packages
+runs:
+  using: composite
+  steps:
+  - name: Bun Variables
+    id: bun
+    shell: bash
+    run: |
+      echo "version=$(bun -v)" >> $GITHUB_OUTPUT
+      echo "cache-dir=$(bun pm cache)" >> $GITHUB_OUTPUT
+  - name: Bun Global Cache
+    uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
+    with:
+      path: '${{ steps.bun.outputs.cache-dir }}'
+      key: bun-${{ steps.bun.outputs.version }}-global-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
+  - name: Node Modules Cache
+    uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4
+    with:
+      path: '**/node_modules'
+      key: bun-${{ steps.bun.outputs.version }}-node-modules-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
+  - name: Install Packages
+    shell: bash
+    run: bun install --frozen-lockfile

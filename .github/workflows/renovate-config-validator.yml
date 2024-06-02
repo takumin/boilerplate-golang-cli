@@ -9,8 +9,12 @@ on:
         default: 'renovate-config-validator'
   pull_request:
     paths:
-    - '.renovaterc.json'
+    - '.github/actions/setup-aqua/action.yaml'
+    - '.github/actions/setup-bun/action.yaml'
     - '.github/workflows/renovate-config-validator.yml'
+    - '.renovaterc.json'
+    - 'bun.lockb'
+    - 'package.json'
 permissions:
   contents: read
 concurrency:
@@ -24,11 +28,9 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4
-    - name: Setup Node.js
-      uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4
-      with:
-        node-version: 'lts/*'
-        cache: 'npm'
-        cache-dependency-path: '.renovaterc.json'
+    - name: Setup Aqua
+      uses: ./.github/actions/setup-aqua
+    - name: Setup Bun
+      uses: ./.github/actions/setup-bun
     - name: Renovate Config Validator
-      run: npx --yes --package renovate -- renovate-config-validator --strict
+      run: bun run renovate-config-validator --strict

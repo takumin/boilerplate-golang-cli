@@ -15,10 +15,10 @@ space_redirects    = true
 binary_next_line   = true
 function_next_line = true
 
-[*.go]
+[{GNUmakefile,Makefile,makefile}]
 indent_style = tab
 
-[{Makefile,makefile}]
+[*.go]
 indent_style = tab
 
 [go.{mod,work}]
@@ -26,3 +26,9 @@ indent_style = tab
 
 [{LICENSE,*.md}]
 indent_style = unset
+
+[bun.lockb]
+end_of_line              = unset
+indent_style             = unset
+insert_final_newline     = unset
+trim_trailing_whitespace = unset
