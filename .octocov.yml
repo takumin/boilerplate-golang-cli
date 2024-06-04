@@ -1,18 +1,35 @@
 repository: takumin/boilerplate-golang-cli
+body:
+  if: false
+summary:
+  if: true
+comment:
+  if: is_pull_request
 push:
-coverage:
-  badge:
-    path: docs/coverage.svg
-  paths:
-  - coverage.out
+  if: is_pull_request
+diff:
+  if: is_pull_request
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
+report:
+  if: is_pull_request
+  datastores:
+    - artifact://${GITHUB_REPOSITORY}
 codeToTestRatio:
+  if: is_pull_request
   badge:
     path: docs/ratio.svg
+testExecutionTime:
+  if: is_pull_request
+  badge:
+    path: docs/time.svg
+coverage:
+  if: is_pull_request
+  badge:
+    path: docs/coverage.svg
+codeToTestRatio:
   code:
   - '**/*.go'
   - '!**/*_test.go'
   test:
   - '**/*_test.go'
-testExecutionTime:
-  badge:
-    path: docs/time.svg
