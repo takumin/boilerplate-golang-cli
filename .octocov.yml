@@ -1,0 +1,31 @@
+repository: github.com/takumin/boilerplate-golang-cli
+summary:
+  if: true
+comment:
+  if: is_pull_request
+  hideFooterLink: true
+push:
+  if: is_default_branch
+report:
+  if: is_default_branch
+  datastores:
+  - artifact://${GITHUB_REPOSITORY}
+diff:
+  datastores:
+  - artifact://${GITHUB_REPOSITORY}
+coverage:
+  badge:
+    path: docs/coverage.svg
+  paths:
+  - coverage.out
+codeToTestRatio:
+  badge:
+    path: docs/ratio.svg
+  code:
+  - '**/*.go'
+  - '!**/*_test.go'
+  test:
+  - '**/*_test.go'
+testExecutionTime:
+  badge:
+    path: docs/time.svg
