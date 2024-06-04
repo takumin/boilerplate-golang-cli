@@ -1,4 +1,4 @@
-repository: github.com/takumin/boilerplate-golang-cli
+repository: takumin/boilerplate-golang-cli
 summary:
   if: true
 comment:
