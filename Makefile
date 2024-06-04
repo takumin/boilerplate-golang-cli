@@ -69,6 +69,8 @@ coverage.html: coverage.out
 octocov: coverage.out
 	octocov
 	octocov ls-files
+	octocov badge coverage --out docs/coverage.svg
+	octocov badge ratio --out docs/ratio.svg
 
 .PHONY: build
 build: bin/$(APPNAME)

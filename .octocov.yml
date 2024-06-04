@@ -1,11 +1,7 @@
 repository: takumin/boilerplate-golang-cli
-body:
-  if: false
 summary:
   if: true
 comment:
-  if: is_pull_request
-push:
   if: is_pull_request
 diff:
   datastores:
@@ -14,16 +10,13 @@ report:
   datastores:
     - artifact://${GITHUB_REPOSITORY}
 coverage:
-  badge:
-    path: docs/coverage.svg
+  paths:
+  - coverage.out
 codeToTestRatio:
-  badge:
-    path: docs/ratio.svg
   code:
   - '**/*.go'
   - '!**/*_test.go'
   test:
   - '**/*_test.go'
 testExecutionTime:
-  badge:
-    path: docs/time.svg
+  acceptable: 3min
