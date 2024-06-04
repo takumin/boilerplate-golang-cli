@@ -15,21 +15,20 @@ report:
   if: is_pull_request
   datastores:
     - artifact://${GITHUB_REPOSITORY}
-codeToTestRatio:
-  if: is_pull_request
-  badge:
-    path: docs/ratio.svg
-testExecutionTime:
-  if: is_pull_request
-  badge:
-    path: docs/time.svg
 coverage:
   if: is_pull_request
   badge:
     path: docs/coverage.svg
 codeToTestRatio:
+  if: is_pull_request
+  badge:
+    path: docs/ratio.svg
   code:
   - '**/*.go'
   - '!**/*_test.go'
   test:
   - '**/*_test.go'
+testExecutionTime:
+  if: is_pull_request
+  badge:
+    path: docs/time.svg
