@@ -12,6 +12,8 @@ on:
     # Build
     - 'Makefile'
     - '.aqua.yaml'
+    # Coverage
+    - '.octocov.yml'
     # GoReleaser
     - '.goreleaser.yml'
     # GitHub Actions
@@ -77,10 +79,10 @@ jobs:
     ################################################################################
     # Coverage
     ################################################################################
-    - name: octocov
+    - name: Coverage (octocov)
       run: make octocov
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OCTOCOV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     ################################################################################
     # GoReleaser
     ################################################################################
