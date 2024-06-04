@@ -63,11 +63,13 @@ test:
 	go test -trimpath -cover -covermode atomic ./...
 
 .PHONY: coverage
-coverage: coverage.out coverage.html
+coverage: coverage.out coverage.html octocov
 coverage.out: $(SRCS)
 	go test -trimpath -cover -covermode atomic -coverprofile=coverage.out ./...
 coverage.html: coverage.out
 	go tool cover -html=coverage.out -o coverage.html
+octocov: coverage.out
+	octocov ls-files
 
 .PHONY: build
 build: bin/$(APPNAME)
