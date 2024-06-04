@@ -20,7 +20,7 @@ LDFLAGS          := -s -w -buildid= $(LDFLAGS_APPNAME) $(LDFLAGS_VERSION) $(LDFL
 BUILDFLAGS       := -trimpath -ldflags '$(LDFLAGS)'
 
 .PHONY: all
-all: clean tools generate fmt vet sec vuln lint test build
+all: clean tools generate fmt vet sec vuln lint test octocov build
 
 .PHONY: docs
 docs:
@@ -59,11 +59,7 @@ lint:
 	staticcheck ./...
 
 .PHONY: test
-test:
-	go test -trimpath -cover -covermode atomic ./...
-
-.PHONY: coverage
-coverage: coverage.out coverage.html
+test: coverage.out coverage.html
 coverage.out: $(SRCS)
 	go test -trimpath -cover -covermode atomic -coverprofile=coverage.out ./...
 coverage.html: coverage.out
