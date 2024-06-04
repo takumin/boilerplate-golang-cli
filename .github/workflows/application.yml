@@ -24,6 +24,7 @@ on:
     - 'go.sum'
 permissions:
   contents: write
+  pull-requests: write
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
   cancel-in-progress: true
@@ -73,6 +74,13 @@ jobs:
       run: make test
     - name: Go Build
       run: make build
+    ################################################################################
+    # Coverage
+    ################################################################################
+    - name: octocov
+      run: make octocov
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     ################################################################################
     # GoReleaser
     ################################################################################
