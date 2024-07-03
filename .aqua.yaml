@@ -17,4 +17,4 @@ packages:
 - name: takumin/gyaml@v0.0.2
 - name: editorconfig-checker/editorconfig-checker@v3.0.2
 - name: oven-sh/bun@bun-v1.1.17
-- name: k1LoW/octocov@v0.60.0
+- name: k1LoW/octocov@v0.61.0
