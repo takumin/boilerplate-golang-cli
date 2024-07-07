@@ -1,3 +1,4 @@
+---
 name: Self Approval
 on:
   pull_request:

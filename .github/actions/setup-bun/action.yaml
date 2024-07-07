@@ -1,3 +1,4 @@
+---
 name: Setup Bun
 description: Setup Bun by using cache and install packages
 runs:
