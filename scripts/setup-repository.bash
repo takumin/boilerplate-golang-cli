@@ -34,11 +34,11 @@ sed -i -E "s@authorName.*string.*=.*// ###BOILERPLATE_AUTHOR_NAME###@authorName 
 
 gofmt -w .
 
-sed -i -E "s@${ORIGIN_URL}@${GITHUB_URL}@" README.md
-sed -i -E "s@${ORIGIN_OWNER}@${GITHUB_OWNER}@" README.md
-sed -i -E "s@${ORIGIN_AUTHOR_NAME}@${GITHUB_AUTHOR_NAME}@" README.md
-sed -i -E "s@${ORIGIN_REPOSITORY}@${GITHUB_REPOSITORY}@" README.md
-sed -i -E "s@${ORIGIN_DESCRIPTION}@${GITHUB_DESCRIPTION}@" README.md
+sed -i -E "s@${ORIGIN_URL}@${GITHUB_URL}@g" README.md
+sed -i -E "s@${ORIGIN_OWNER}@${GITHUB_OWNER}@g" README.md
+sed -i -E "s@${ORIGIN_AUTHOR_NAME}@${GITHUB_AUTHOR_NAME}@g" README.md
+sed -i -E "s@${ORIGIN_REPOSITORY}@${GITHUB_REPOSITORY}@g" README.md
+sed -i -E "s@${ORIGIN_DESCRIPTION}@${GITHUB_DESCRIPTION}@g" README.md
 
 sed -i -E "s@${ORIGIN_REPOSITORY}@${GITHUB_REPOSITORY}@" .octocov.yml
 
