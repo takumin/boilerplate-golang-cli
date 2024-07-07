@@ -61,6 +61,7 @@ tasks:
     - '**/go.mod'
     - '**/go.sum'
     - '**/*.go'
+    - exclude: '**/*_test.go'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -88,7 +89,7 @@ tasks:
     sources:
     - '**/go.mod'
     - '**/go.sum'
-    - '**/*.go'
+    - '**/*_test.go'
     generates:
     - coverage.out
     - coverage.html
@@ -103,7 +104,7 @@ tasks:
     - '**/go.mod'
     - '**/go.sum'
     - '**/*.go'
-    - exclude: '**_test.go'
+    - exclude: '**/*_test.go'
     generates:
     - bin/{{.BINNAME}}
     env:
