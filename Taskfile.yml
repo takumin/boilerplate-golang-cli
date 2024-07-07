@@ -11,3 +11,7 @@ tasks:
     silent: true
     deps:
     - task: go
+  clean:
+    silent: true
+    deps:
+    - task: go:clean
