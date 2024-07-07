@@ -1,3 +1,4 @@
+---
 name: Reviewdog (gofmt)
 on:
   workflow_call:

@@ -1,3 +1,4 @@
+---
 name: Setup Repository
 on:
   push:
@@ -32,7 +33,7 @@ jobs:
         rm scripts/setup-repository.bash
     - name: Reinitialize Repository
       shell: bash
-      run: |
+      run: |-
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
         git add .

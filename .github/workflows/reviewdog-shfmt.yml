@@ -1,3 +1,4 @@
+---
 name: Reviewdog (shfmt)
 on:
   workflow_call:

@@ -1,3 +1,4 @@
+---
 name: Reviewdog (editorconfig-checker)
 on:
   workflow_call:
