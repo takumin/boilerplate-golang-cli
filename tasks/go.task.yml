@@ -40,6 +40,13 @@ tasks:
     - test
     - build
 
+  clean:
+    run: once
+    cmds:
+    - rm -f coverage.out
+    - rm -f coverage.html
+    - rm -fr bin
+
   mod:
     run: once
     sources:
