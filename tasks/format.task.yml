@@ -7,44 +7,47 @@ tasks:
   default:
     silent: true
     deps:
-    - aqua
-    - pinact
-    - ghalint
+    - shfmt
+    - yamlfmt
+    - gofmt
 
-  aqua:
+  shfmt:
     run: once
     sources:
-    - .aqua.yaml
+    - '**/*.sh'
+    - '**/*.bash'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - aqua install --all
+    - shfmt -w .
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  pinact:
+  yamlfmt:
     run: once
-    deps: [aqua]
     sources:
-    - '.github/**/*.yml'
-    - '.github/**/*.yaml'
+    - '**/*.yml'
+    - '**/*.yaml'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - pinact run
+    - yamlfmt .
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  ghalint:
+  gofmt:
     run: once
-    deps: [pinact]
     sources:
-    - '.github/**/*.yml'
-    - '.github/**/*.yaml'
+    - '**/go.mod'
+    - '**/go.sum'
+    - '**/*.go'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - ghalint run
-    - ghalint act
+    - gofmt -w .
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
