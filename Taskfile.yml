@@ -5,6 +5,7 @@ version: '3'
 
 includes:
   tool: ./tasks/tool.task.yml
+  reviewdog: ./tasks/reviewdog.task.yml
   go: ./tasks/go.task.yml
 
 tasks:
@@ -12,6 +13,7 @@ tasks:
     silent: true
     deps:
     - task: tool
+    - task: reviewdog
     - task: go
   test:
     silent: true
