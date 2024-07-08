@@ -37,6 +37,7 @@ tasks:
     - mod
     - gen
     - fmt
+    - vet
     - test
     - build
 
@@ -87,6 +88,20 @@ tasks:
     - .task/.done_{{.TASK}}
     cmds:
     - gofmt -e -d .
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  vet:
+    run: once
+    deps: [fmt]
+    sources:
+    - '**/go.mod'
+    - '**/go.sum'
+    - '**/*.go'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - go vet ./...
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
