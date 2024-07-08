@@ -4,12 +4,14 @@
 version: '3'
 
 includes:
+  tool: ./tasks/tool.task.yml
   go: ./tasks/go.task.yml
 
 tasks:
   default:
     silent: true
     deps:
+    - task: tool
     - task: go
   test:
     silent: true
