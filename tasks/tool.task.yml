@@ -7,24 +7,11 @@ tasks:
   default:
     silent: true
     deps:
-    - aqua
     - pinact
     - ghalint
 
-  aqua:
-    run: once
-    sources:
-    - .aqua.yaml
-    generates:
-    - .task/.done_{{.TASK}}
-    cmds:
-    - aqua install --all
-    - cmd: touch .task/.done_{{.TASK}}
-      silent: true
-
   pinact:
     run: once
-    deps: [aqua]
     sources:
     - '.github/**/*.yml'
     - '.github/**/*.yaml'

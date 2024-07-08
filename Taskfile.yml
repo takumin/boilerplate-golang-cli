@@ -12,11 +12,22 @@ includes:
 tasks:
   default:
     silent: true
-    deps:
+    deps: [aqua]
+    cmds:
     - task: tool
     - task: format
     - task: reviewdog
     - task: go
+  aqua:
+    run: once
+    sources:
+    - .aqua.yaml
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - aqua install --all
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
   test:
     silent: true
     deps:
