@@ -7,7 +7,7 @@ includes:
   tool: ./tasks/tool.task.yml
   format: ./tasks/format.task.yml
   reviewdog: ./tasks/reviewdog.task.yml
-  go: ./tasks/go.task.yml
+  app: ./tasks/app.task.yml
 
 tasks:
   default:
@@ -17,7 +17,7 @@ tasks:
     - task: tool
     - task: format
     - task: reviewdog
-    - task: go
+    - task: app
   aqua:
     run: once
     sources:
@@ -31,12 +31,12 @@ tasks:
   test:
     silent: true
     deps:
-    - task: go:{{.TASK}}
+    - task: app:{{.TASK}}
   build:
     silent: true
     deps:
-    - task: go:{{.TASK}}
+    - task: app:{{.TASK}}
   clean:
     silent: true
     deps:
-    - task: go:{{.TASK}}
+    - task: app:{{.TASK}}
