@@ -11,7 +11,15 @@ tasks:
     silent: true
     deps:
     - task: go
+  test:
+    silent: true
+    deps:
+    - task: go:{{.TASK}}
+  build:
+    silent: true
+    deps:
+    - task: go:{{.TASK}}
   clean:
     silent: true
     deps:
-    - task: go:clean
+    - task: go:{{.TASK}}
