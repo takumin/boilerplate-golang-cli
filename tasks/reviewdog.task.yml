@@ -1,0 +1,174 @@
+---
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  REVIEWDOG_ARGS:
+  - -filter-mode 'nofilter'
+  - -log-level 'warning'
+  - -fail-on-error
+
+tasks:
+  default:
+    silent: true
+    deps:
+    - editorconfig-checker
+    - gjson-validate
+    - gyaml-validate
+    - shfmt
+    - shellcheck
+    - gofmt
+    - govet
+    - gosec
+    - staticcheck
+    - actionlint
+
+  editorconfig-checker:
+    run: once
+    sources:
+    - '**/*'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  gjson-validate:
+    run: once
+    sources:
+    - '**/*.json'
+    - '**/*.json.golden'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    - exclude: '**/*.invalid.json'
+    - exclude: '**/*.invalid.json.golden'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  gyaml-validate:
+    run: once
+    sources:
+    - '**/*.yml'
+    - '**/*.yaml'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    - exclude: '**/*.invalid.yml'
+    - exclude: '**/*.invalid.yaml'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  shfmt:
+    run: once
+    sources:
+    - '**/*.sh'
+    - '**/*.bash'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  shellcheck:
+    run: once
+    sources:
+    - '**/*.sh'
+    - '**/*.bash'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  gofmt:
+    run: once
+    sources:
+    - 'go.work'
+    - '**/go.mod'
+    - '**/go.sum'
+    - '**/*.go'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  govet:
+    run: once
+    sources:
+    - 'go.work'
+    - '**/go.mod'
+    - '**/go.sum'
+    - '**/*.go'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  gosec:
+    run: once
+    sources:
+    - 'go.work'
+    - '**/go.mod'
+    - '**/go.sum'
+    - '**/*.go'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  staticcheck:
+    run: once
+    sources:
+    - 'go.work'
+    - '**/go.mod'
+    - '**/go.sum'
+    - '**/*.go'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  actionlint:
+    run: once
+    sources:
+    - '.github/**/*.yml'
+    - '.github/**/*.yaml'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
