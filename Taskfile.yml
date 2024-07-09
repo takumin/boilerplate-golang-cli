@@ -6,6 +6,7 @@ version: '3'
 includes:
   tool: ./tasks/tool.task.yml
   format: ./tasks/format.task.yml
+  generate: ./tasks/generate.task.yml
   reviewdog: ./tasks/reviewdog.task.yml
   app: ./tasks/app.task.yml
 
@@ -15,6 +16,7 @@ tasks:
     deps: [aqua]
     cmds:
     - task: tool
+    - task: generate
     - task: format
     - task: reviewdog
     - task: app
