@@ -8,7 +8,7 @@ vars:
   GOARCH: '{{.GOARCH | default ARCH .GOARCH}}'
 
   APPNAME:
-    sh: basename '{{.TASKFILE_DIR}}'
+    sh: basename '{{.ROOT_DIR}}'
   PKGNAME:
     sh: go mod edit -json | jq -r '.Module.Path'
 
