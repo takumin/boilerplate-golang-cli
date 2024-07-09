@@ -30,6 +30,8 @@ tasks:
     - '**/*'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -44,6 +46,8 @@ tasks:
     - '**/*.json.golden'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     - exclude: '**/*.invalid.json'
     - exclude: '**/*.invalid.json.golden'
     generates:
@@ -60,6 +64,8 @@ tasks:
     - '**/*.yaml'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     - exclude: '**/*.invalid.yml'
     - exclude: '**/*.invalid.yaml'
     generates:
@@ -76,6 +82,8 @@ tasks:
     - '**/*.bash'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -90,6 +98,8 @@ tasks:
     - '**/*.bash'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -106,6 +116,8 @@ tasks:
     - '**/*.go'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -122,6 +134,8 @@ tasks:
     - '**/*.go'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -138,6 +152,8 @@ tasks:
     - '**/*.go'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -154,6 +170,8 @@ tasks:
     - '**/*.go'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'bin/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
