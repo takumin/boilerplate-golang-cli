@@ -35,7 +35,6 @@ tasks:
     silent: true
     deps:
     - mod
-    - gen
     - test
     - build
 
@@ -60,24 +59,9 @@ tasks:
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  gen:
-    run: once
-    deps: [mod]
-    sources:
-    - '**/go.mod'
-    - '**/go.sum'
-    - '**/*.go'
-    - exclude: '**/*_test.go'
-    generates:
-    - .task/.done_{{.TASK}}
-    cmds:
-    - go generate ./...
-    - cmd: touch .task/.done_{{.TASK}}
-      silent: true
-
   test:
     run: once
-    deps: [gen]
+    deps: [mod]
     sources:
     - '**/go.mod'
     - '**/go.sum'
@@ -91,7 +75,7 @@ tasks:
 
   build:
     run: once
-    deps: [gen]
+    deps: [mod]
     sources:
     - '**/go.mod'
     - '**/go.sum'
