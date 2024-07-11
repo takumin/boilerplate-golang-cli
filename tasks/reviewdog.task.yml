@@ -32,6 +32,8 @@ tasks:
     - exclude: '.task/**/*'
     - exclude: 'bin/**/*'
     - exclude: 'dist/**/*'
+    - exclude: '**/coverage.out'
+    - exclude: '**/coverage.html'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
