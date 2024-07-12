@@ -7,9 +7,9 @@ tasks:
   default:
     silent: true
     deps:
-    - ghalint
+    - pinact
 
-  ghalint:
+  pinact:
     run: once
     sources:
     - '.github/**/*.yml'
@@ -17,7 +17,6 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - ghalint run
-    - ghalint act
+    - pinact run
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
