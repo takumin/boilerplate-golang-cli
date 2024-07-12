@@ -4,7 +4,6 @@
 version: '3'
 
 includes:
-  tool: ./tasks/tool.task.yml
   generate: ./tasks/generate.task.yml
   style: ./tasks/style.task.yml
   format: ./tasks/format.task.yml
@@ -16,7 +15,6 @@ tasks:
     silent: true
     deps: [aqua]
     cmds:
-    - task: tool
     - task: generate
     - task: style
     - task: format
