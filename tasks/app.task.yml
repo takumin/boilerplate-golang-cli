@@ -4,11 +4,6 @@
 version: '3'
 
 vars:
-  GOOS: '{{.GOOS | default OS .GOOS}}'
-  GOARCH: '{{.GOARCH | default ARCH .GOARCH}}'
-
-  APPNAME:
-    sh: basename '{{.ROOT_DIR}}'
   PKGNAME:
     sh: go mod edit -json | jq -r '.Module.Path'
 
@@ -21,8 +16,6 @@ vars:
   REVISION: '{{.COMMIT_ID}}'
   PRERELEASE: '{{.PRERELEASE | default "dev" .PRERELEASE}}'
   FULLVERSION: '{{.VERSION}}{{if ne "" .PRERELEASE}}-{{.PRERELEASE}}{{end}}'
-
-  BINNAME: '{{.APPNAME}}_v{{.FULLVERSION}}_{{.GOOS}}_{{.GOARCH}}{{exeExt}}'
 
   LDFLAGS_VERSION: -X "{{.PKGNAME}}/internal/version.version={{.VERSION}}"
   LDFLAGS_REVISION: -X "{{.PKGNAME}}/internal/version.revision={{.REVISION}}"
@@ -83,9 +76,56 @@ tasks:
     - exclude: '**/*_test.go'
     generates:
     - bin/{{.BINNAME}}
+    vars:
+      GOOS: '{{default OS .GOOS}}'
+      GOARCH: '{{default ARCH .GOARCH}}'
+      BINEXE: '{{if eq .GOOS "windows"}}.exe{{end}}'
+      BINNAME: '{{base .ROOT_DIR}}_v{{.FULLVERSION}}_{{.GOOS}}_{{.GOARCH}}{{.BINEXE}}'
     env:
       CGO_ENABLED: 0
       GOOS: '{{.GOOS}}'
       GOARCH: '{{.GOARCH}}'
     cmds:
     - go build {{.BUILDFLAGS}} -o bin/{{.BINNAME}}
+
+  build:darwin:amd64:
+    cmds:
+    - task: build
+      vars:
+        GOOS: darwin
+        GOARCH: amd64
+
+  build:darwin:arm64:
+    cmds:
+    - task: build
+      vars:
+        GOOS: darwin
+        GOARCH: arm64
+
+  build:linux:amd64:
+    cmds:
+    - task: build
+      vars:
+        GOOS: linux
+        GOARCH: amd64
+
+  build:linux:arm64:
+    cmds:
+    - task: build
+      vars:
+        GOOS: linux
+        GOARCH: arm64
+
+  build:windows:amd64:
+    cmds:
+    - task: build
+      vars:
+        GOOS: windows
+        GOARCH: amd64
+
+  build:windows:arm64:
+    cmds:
+    - task: build
+      vars:
+        GOOS: windows
+        GOARCH: arm64
