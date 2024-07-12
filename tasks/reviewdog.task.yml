@@ -23,6 +23,8 @@ tasks:
     - gosec
     - staticcheck
     - actionlint
+    - ghalint-run
+    - ghalint-act
 
   editorconfig-checker:
     run: once
@@ -182,6 +184,30 @@ tasks:
       silent: true
 
   actionlint:
+    run: once
+    sources:
+    - '.github/**/*.yml'
+    - '.github/**/*.yaml'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  ghalint-run:
+    run: once
+    sources:
+    - '.github/**/*.yml'
+    - '.github/**/*.yaml'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  ghalint-act:
     run: once
     sources:
     - '.github/**/*.yml'

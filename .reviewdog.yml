@@ -16,6 +16,16 @@ runner:
     cmd: actionlint -oneline
     errorformat:
     - '%f:%l:%c: %m'
+  ghalint-run:
+    cmd: ghalint --log-color never run
+    errorformat:
+    - '%.%#error="%m" job_name=%.%#workflow_file_path=%f'
+    - '%-G%.%#'
+  ghalint-act:
+    cmd: ghalint --log-color never act $(find .github/actions -type f -name action.yaml)
+    errorformat:
+    - '%.%#action_file_path=%f error="%m" policy_name=%.%#'
+    - '%-G%.%#'
   gofmt:
     cmd: gofmt -d .
     format: diff
