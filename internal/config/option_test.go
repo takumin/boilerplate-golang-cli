@@ -16,6 +16,15 @@ func TestLogLevel(t *testing.T) {
 	}
 }
 
+func TestLogFormat(t *testing.T) {
+	want := &config.Config{LogFormat: "TEST"}
+	got := &config.Config{}
+	config.LogFormat("TEST").Apply(got)
+	if !reflect.DeepEqual(want, got) {
+		t.Error("expected config struct to be equal, but got not equal")
+	}
+}
+
 func TestVariable(t *testing.T) {
 	want := &config.Config{Variable: "TEST"}
 	got := &config.Config{}
