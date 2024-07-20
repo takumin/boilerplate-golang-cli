@@ -73,10 +73,11 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 
 func before(cfg *config.Config) func(ctx *cli.Context) error {
 	return func(ctx *cli.Context) error {
-		slog.SetDefault(slog.New(slog.NewTextHandler(ctx.App.Writer, nil)))
 		switch cfg.LogFormat {
-		case "text", "":
-			// inherit default settings
+		case "":
+			// inherit default handler
+		case "text":
+			slog.SetDefault(slog.New(slog.NewTextHandler(ctx.App.Writer, nil)))
 		case "json":
 			slog.SetDefault(slog.New(slog.NewJSONHandler(ctx.App.Writer, nil)))
 		default:
