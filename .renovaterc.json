@@ -22,6 +22,11 @@
       "matchManagers": ["gomod"],
       "matchDepTypes": ["indirect"],
       "enabled": true
+    },
+    {
+      "matchManagers": ["bun"],
+      "matchPackageNames": ["renovate"],
+      "extends": ["schedule:weekly"]
     }
   ]
 }
