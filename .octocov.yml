@@ -9,9 +9,6 @@ diff:
 report:
   datastores:
   - artifact://${GITHUB_REPOSITORY}
-coverage:
-  paths:
-  - coverage.out
 codeToTestRatio:
   code:
   - '**/*.go'
