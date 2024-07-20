@@ -56,7 +56,7 @@ func before(cfg *config.Config) func(ctx *cli.Context) error {
 		switch cfg.LogLevel {
 		case "debug":
 			opts.Level = slog.LevelDebug
-		case "info":
+		case "info", "":
 			opts.Level = slog.LevelInfo
 		case "warn":
 			opts.Level = slog.LevelWarn
