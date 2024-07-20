@@ -32,6 +32,14 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 			Value:       cfg.LogLevel,
 			Destination: &cfg.LogLevel,
 		},
+		&cli.StringFlag{
+			Name:        "log-format",
+			Aliases:     []string{"f"},
+			Usage:       "log format",
+			EnvVars:     []string{"LOG_FORMAT"},
+			Value:       cfg.LogFormat,
+			Destination: &cfg.LogFormat,
+		},
 	}
 
 	cmds := []*cli.Command{
@@ -66,6 +74,14 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 func before(cfg *config.Config) func(ctx *cli.Context) error {
 	return func(ctx *cli.Context) error {
 		slog.SetDefault(slog.New(slog.NewTextHandler(ctx.App.Writer, nil)))
+		switch cfg.LogFormat {
+		case "text", "":
+			// inherit default settings
+		case "json":
+			slog.SetDefault(slog.New(slog.NewJSONHandler(ctx.App.Writer, nil)))
+		default:
+			return fmt.Errorf("unknown log format: %s", cfg.LogFormat)
+		}
 		switch cfg.LogLevel {
 		case "debug":
 			slog.SetLogLoggerLevel(slog.LevelDebug)

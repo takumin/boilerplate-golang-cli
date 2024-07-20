@@ -18,13 +18,16 @@ func TestRun(t *testing.T) {
 		args   string
 		exit   int
 	}{
-		"empty":             {"", "", "", "", command.ExitOK},
-		"unknown":           {"", "", "", "a unknown", command.ExitNG},
-		"log-level-debug":   {"", "", "", "a -l debug", command.ExitOK},
-		"log-level-info":    {"", "", "", "a -l info", command.ExitOK},
-		"log-level-warn":    {"", "", "", "a -l warn", command.ExitOK},
-		"log-level-error":   {"", "", "", "a -l error", command.ExitOK},
-		"log-level-unknown": {"", "", "", "a -l unknown", command.ExitNG},
+		"empty":              {"", "", "", "", command.ExitOK},
+		"unknown":            {"", "", "", "a unknown", command.ExitNG},
+		"log-level-debug":    {"", "", "", "a -l debug", command.ExitOK},
+		"log-level-info":     {"", "", "", "a -l info", command.ExitOK},
+		"log-level-warn":     {"", "", "", "a -l warn", command.ExitOK},
+		"log-level-error":    {"", "", "", "a -l error", command.ExitOK},
+		"log-level-unknown":  {"", "", "", "a -l unknown", command.ExitNG},
+		"log-format-text":    {"", "", "", "a -f text", command.ExitOK},
+		"log-format-json":    {"", "", "", "a -f json", command.ExitOK},
+		"log-format-unknown": {"", "", "", "a -f unknown", command.ExitNG},
 	}
 
 	for name, tt := range cases {

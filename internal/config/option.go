@@ -10,6 +10,12 @@ func (o LogLevel) Apply(c *Config) {
 	c.LogLevel = string(o)
 }
 
+type LogFormat string
+
+func (o LogFormat) Apply(c *Config) {
+	c.LogFormat = string(o)
+}
+
 type Variable string
 
 func (o Variable) Apply(c *Config) {
