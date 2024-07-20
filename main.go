@@ -6,8 +6,10 @@ import (
 	"github.com/takumin/boilerplate-golang-cli/internal/command"
 )
 
+var osExit = os.Exit
+
 func main() {
-	os.Exit(command.Main(
+	osExit(command.Main(
 		os.Stdout,
 		os.Stderr,
 		os.Stdin,
