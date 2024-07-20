@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 
 	"github.com/urfave/cli/v2"
@@ -41,9 +41,31 @@ func main() {
 		Flags:                flags,
 		Commands:             cmds,
 		EnableBashCompletion: true,
+		Before:               before(cfg),
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		log.Fatal(err)
+		slog.Error("failed application", slog.Any("error", err))
+		os.Exit(1)
+	}
+}
+
+func before(cfg *config.Config) func(ctx *cli.Context) error {
+	return func(ctx *cli.Context) error {
+		opts := slog.HandlerOptions{}
+		switch cfg.LogLevel {
+		case "debug":
+			opts.Level = slog.LevelDebug
+		case "info":
+			opts.Level = slog.LevelInfo
+		case "warn":
+			opts.Level = slog.LevelWarn
+		case "error":
+			opts.Level = slog.LevelError
+		default:
+			return fmt.Errorf("unknown log level: %s", cfg.LogLevel)
+		}
+		slog.SetDefault(slog.New(slog.NewTextHandler(os.Stdout, &opts)))
+		return nil
 	}
 }
