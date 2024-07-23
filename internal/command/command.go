@@ -21,7 +21,10 @@ const (
 )
 
 func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) int {
-	cfg := config.NewConfig()
+	cfg := config.NewConfig(
+		config.LogLevel("info"),
+		config.LogFormat("json"),
+	)
 
 	flags := []cli.Flag{
 		&cli.StringFlag{
