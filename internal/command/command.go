@@ -31,6 +31,21 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 			EnvVars:     []string{"LOG_LEVEL"},
 			Value:       cfg.LogLevel,
 			Destination: &cfg.LogLevel,
+			Action: func(*cli.Context, string) error {
+				switch cfg.LogLevel {
+				case "debug":
+					slog.SetLogLoggerLevel(slog.LevelDebug)
+				case "info":
+					slog.SetLogLoggerLevel(slog.LevelInfo)
+				case "warn":
+					slog.SetLogLoggerLevel(slog.LevelWarn)
+				case "error":
+					slog.SetLogLoggerLevel(slog.LevelError)
+				default:
+					return fmt.Errorf("unknown log level: %s", cfg.LogLevel)
+				}
+				return nil
+			},
 		},
 		&cli.StringFlag{
 			Name:        "log-format",
@@ -39,6 +54,17 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 			EnvVars:     []string{"LOG_FORMAT"},
 			Value:       cfg.LogFormat,
 			Destination: &cfg.LogFormat,
+			Action: func(ctx *cli.Context, _ string) error {
+				switch cfg.LogFormat {
+				case "text":
+					slog.SetDefault(slog.New(slog.NewTextHandler(ctx.App.Writer, nil)))
+				case "json":
+					slog.SetDefault(slog.New(slog.NewJSONHandler(ctx.App.Writer, nil)))
+				default:
+					return fmt.Errorf("unknown log format: %s", cfg.LogFormat)
+				}
+				return nil
+			},
 		},
 	}
 
@@ -55,7 +81,6 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 		Flags:                flags,
 		Commands:             cmds,
 		EnableBashCompletion: true,
-		Before:               before(cfg),
 		Reader:               stdin,
 		Writer:               stdout,
 		ErrWriter:            stderr,
@@ -69,32 +94,4 @@ func Main(stdout io.Writer, stderr io.Writer, stdin io.Reader, args []string) in
 	}
 
 	return ExitOK
-}
-
-func before(cfg *config.Config) func(ctx *cli.Context) error {
-	return func(ctx *cli.Context) error {
-		switch cfg.LogFormat {
-		case "":
-			// inherit default handler
-		case "text":
-			slog.SetDefault(slog.New(slog.NewTextHandler(ctx.App.Writer, nil)))
-		case "json":
-			slog.SetDefault(slog.New(slog.NewJSONHandler(ctx.App.Writer, nil)))
-		default:
-			return fmt.Errorf("unknown log format: %s", cfg.LogFormat)
-		}
-		switch cfg.LogLevel {
-		case "debug":
-			slog.SetLogLoggerLevel(slog.LevelDebug)
-		case "info", "":
-			slog.SetLogLoggerLevel(slog.LevelInfo)
-		case "warn":
-			slog.SetLogLoggerLevel(slog.LevelWarn)
-		case "error":
-			slog.SetLogLoggerLevel(slog.LevelError)
-		default:
-			return fmt.Errorf("unknown log level: %s", cfg.LogLevel)
-		}
-		return nil
-	}
 }
