@@ -11,12 +11,12 @@ runs:
       echo "version=$(bun -v)" >> $GITHUB_OUTPUT
       echo "cache-dir=$(bun pm cache)" >> $GITHUB_OUTPUT
   - name: Bun Global Cache
-    uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2 # v4.1.0
+    uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
     with:
       path: '${{ steps.bun.outputs.cache-dir }}'
       key: bun-${{ steps.bun.outputs.version }}-global-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
   - name: Node Modules Cache
-    uses: actions/cache@2cdf405574d6ef1f33a1d12acccd3ae82f47b3f2 # v4.1.0
+    uses: actions/cache@3624ceb22c1c5a301c8db4169662070a689d9ea8 # v4.1.1
     with:
       path: '**/node_modules'
       key: bun-${{ steps.bun.outputs.version }}-node-modules-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
