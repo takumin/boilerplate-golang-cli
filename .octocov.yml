@@ -1,4 +1,5 @@
 ---
+timeout: 5min
 summary:
   if: true
 comment:
