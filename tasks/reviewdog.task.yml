@@ -7,7 +7,7 @@ vars:
   REVIEWDOG_ARGS:
   - -filter-mode 'nofilter'
   - -log-level 'warning'
-  - -fail-on-error
+  - -fail-level 'any'
 
 tasks:
   default:
