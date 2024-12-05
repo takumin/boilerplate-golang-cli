@@ -23,19 +23,19 @@ runs:
     uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
     with:
       path: ~/.local/share/aquaproj-aqua
-      key: aqua-${{ runner.os }}-${{ go.version }}-${{ hashFiles('**/.aqua.yaml') }}
+      key: aqua-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/.aqua.yaml') }}
   - name: Golang Build Cache
     if: inputs.go-cache
     uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
     with:
       path: ~/.cache/go-build
-      key: go-build-${{ runner.os }}-${{ go.version }}-${{ hashFiles('**/go.sum') }}
+      key: go-build-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/go.sum') }}
   - name: Golang Mod Cache
     if: inputs.go-cache
     uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
     with:
       path: ~/.usr/pkg/mod
-      key: go-build-${{ runner.os }}-${{ go.version }}-${{ hashFiles('**/go.sum') }}
+      key: go-build-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/go.sum') }}
   - name: Setup Aqua
     uses: aquaproj/aqua-installer@f13c5d2f0357708d85477aabe50fd3f725528745 # v3.1.0
     with:
