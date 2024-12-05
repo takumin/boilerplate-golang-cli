@@ -13,9 +13,6 @@ runs:
     id: go
     shell: bash
     run: echo "version=$(grep -E '^go' go.mod | sed -E 's/ //')" >> $GITHUB_OUTPUT
-  - name: Set Go Path
-    shell: bash
-    run: echo "GOPATH=~/.usr" >> $GITHUB_ENV
   - name: Allow Local Registry
     shell: bash
     run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> $GITHUB_ENV
@@ -33,7 +30,7 @@ runs:
   - name: Golang Mod Cache
     uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
     with:
-      path: ~/.usr/pkg/mod
+      path: ~/go/pkg/mod
       key: go-build-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/go.sum') }}
       lookup-only: ${{ inputs.go-cache == 'false' }}
   - name: Setup Aqua
