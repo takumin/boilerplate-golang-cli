@@ -17,18 +17,18 @@ runs:
     shell: bash
     run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> $GITHUB_ENV
   - name: Aqua Tools Cache
-    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+    uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       path: ~/.local/share/aquaproj-aqua
       key: aqua-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/.aqua.yaml') }}
   - name: Golang Build Cache
-    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+    uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       path: ~/.cache/go-build
       key: go-build-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/go.sum') }}
       lookup-only: ${{ inputs.go-cache == 'false' }}
   - name: Golang Mod Cache
-    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+    uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       path: ~/go/pkg/mod
       key: go-build-${{ runner.os }}-${{ steps.go.version }}-${{ hashFiles('**/go.sum') }}
