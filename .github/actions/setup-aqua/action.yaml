@@ -12,7 +12,7 @@ runs:
   - name: Get Go Version
     id: go
     shell: bash
-    run: echo "version=$(grep -E '^go' go.mod | sed -E 's/ //')" >> $GITHUB_OUTPUT
+    run: echo "version=$(grep -E '^go' ${{ github.workspace }}/go.mod | sed -E 's/ //')" >> $GITHUB_OUTPUT
   - name: Allow Local Registry
     shell: bash
     run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> $GITHUB_ENV
