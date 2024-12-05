@@ -1,23 +1,48 @@
 ---
 name: Setup Aqua
 description: Setup Aqua by using cache and environment variables
+inputs:
+  go-cache:
+    description: golang actions cache enabled
+    required: false
+    default: 'false'
 runs:
   using: composite
   steps:
-  - name: Cache Directory
-    id: cache-dir
+  - name: Get Go Version
+    id: go
     shell: bash
-    run: echo "aqua=${AQUA_ROOT_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/aquaproj-aqua}" >> $GITHUB_OUTPUT
-  - name: Aqua Tools Cache
-    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
-    with:
-      path: ${{ steps.cache-dir.outputs.aqua }}
-      key: aqua-tools-${{ runner.os }}-${{ hashFiles('**/.aqua.yaml') }}
+    run: echo "version=$(grep -E '^go' go.mod | sed -E 's/ //')" >> $GITHUB_OUTPUT
+  - name: Set Go Path
+    shell: bash
+    run: echo "GOPATH=~/.usr" >> $GITHUB_ENV
   - name: Allow Local Registry
     shell: bash
     run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> $GITHUB_ENV
+  - name: Aqua Tools Cache
+    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+    with:
+      path: ~/.local/share/aquaproj-aqua
+      key: aqua-${{ runner.os }}-${{ go.version }}-${{ hashFiles('**/.aqua.yaml') }}
+  - name: Golang Build Cache
+    if: inputs.go-cache
+    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+    with:
+      path: ~/.cache/go-build
+      key: go-build-${{ runner.os }}-${{ go.version }}-${{ hashFiles('**/go.sum') }}
+  - name: Golang Mod Cache
+    if: inputs.go-cache
+    uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a # v4.1.2
+    with:
+      path: ~/.usr/pkg/mod
+      key: go-build-${{ runner.os }}-${{ go.version }}-${{ hashFiles('**/go.sum') }}
   - name: Setup Aqua
     uses: aquaproj/aqua-installer@f13c5d2f0357708d85477aabe50fd3f725528745 # v3.1.0
     with:
       aqua_version: v2.38.3
-      aqua_opts: -a
+      enable_aqua_install: false
+  - name: Install Tools
+    shell: bash
+    run: |-
+      aqua install --exclude-tags go --all
+      aqua install --all
