@@ -62,6 +62,9 @@ jobs:
     strategy:
       matrix:
         target: ${{ fromJson(needs.matrix.outputs.targets) }}
+    permissions:
+      id-token: write
+      attestations: write
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -75,6 +78,15 @@ jobs:
       run: task app:mod
     - name: Go Build
       run: task app:build
+    - name: Artifact Attestation
+      uses: actions/attest-build-provenance@ef244123eb79f2f7a7e75d99086184180e6d0018 # v1.4.4
+      with:
+        subject-path: 'bin/*'
+    - name: Upload Artifact
+      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+      with:
+        name: '${{ env.GOOS }}-${{ env.GOARCH }}'
+        path: 'bin/*'
   ################################################################################
   # Status Check
   ################################################################################
