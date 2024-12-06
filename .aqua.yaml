@@ -12,7 +12,6 @@ packages:
 - name: honnef.co/go/tools/cmd/staticcheck@2024.1.1
   registry: local
   tags: [go]
-- name: goreleaser/goreleaser@v2.4.8
 - name: securego/gosec@v2.21.4
 - name: reviewdog/reviewdog@v0.20.3
 - name: mvdan/sh@v3.10.0
