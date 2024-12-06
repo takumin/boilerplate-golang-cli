@@ -170,7 +170,12 @@ jobs:
     name: CI
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: failure()
+    permissions:
+      actions: read
+    if: always()
     steps:
+    - name: Actions Timeline
+      uses: Kesin11/actions-timeline@3046833d9aacfd7745c5264b7f3af851c3e2a619 # v2.2.1
     - name: Failure Status
+      if: failure()
       run: exit 1
