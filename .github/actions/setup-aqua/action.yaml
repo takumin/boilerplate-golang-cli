@@ -31,10 +31,12 @@ runs:
       aqua install --all
   - name: Get Default Branch
     id: gh
+    env:
+      GH_TOKEN: ${{ github.token }}
     shell: bash
-    run: echo default_branch_ref="$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" >> "$GITHUB_OUTPUT"
+    run: echo default_branch_ref_name="$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" >> "$GITHUB_OUTPUT"
   - name: Save Aqua Cache
-    if: github.ref_name == steps.gh.outputs.default_branch_ref
+    if: github.ref_name == steps.gh.outputs.default_branch_ref_name
     uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       key: aqua-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/.aqua.yaml') }}
