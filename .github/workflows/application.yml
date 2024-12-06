@@ -72,24 +72,25 @@ jobs:
       uses: ./.github/actions/setup-aqua
     - name: Go Vars
       id: go
-      run: |
-        {
-        echo version="$(go env GOVERSION | sed -E 's/^go//')"
-        echo cache="$(go env GOCACHE)"
-        echo modcache="$(go env GOMODCACHE)"
-        } >> "$GITHUB_OUTPUT"
+      run: echo version="$(go env GOVERSION | sed -E 's/^go//')" >> "$GITHUB_OUTPUT"
     - name: Go Env (GOOS)
       run: echo GOOS="$(echo '${{ matrix.target }}' | cut -d '/' -f 1)" >> "$GITHUB_ENV"
     - name: Go Env (GOARCH)
       run: echo GOARCH="$(echo '${{ matrix.target }}' | cut -d '/' -f 2)" >> "$GITHUB_ENV"
+    - name: Go Env (GOPATH)
+      run: echo GOPATH="$(echo "${HOME}/.usr")" >> "$GITHUB_ENV"
+    - name: Go Env (GOCACHE)
+      run: echo GOCACHE="$(echo "${HOME}/.cache/go-build")" >> "$GITHUB_ENV"
+    - name: Go Env (GOMODCACHE)
+      run: echo GOMODCACHE="$(echo '${{ env.GOPATH }}/pkg/mod')" >> "$GITHUB_ENV"
     - name: Restore Go Cache
       id: cache-primes-restore
       uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
         key: go-build-${{ steps.go.outputs.version }}-${{ env.GOOS }}-${{ env.GOARCH }}-${{ hashFiles('**/go.sum') }}
         path: |
-          ${{ steps.go.outputs.cache }}
-          ${{ steps.go.outputs.modcache }}
+          ${{ env.GOCACHE }}
+          ${{ env.GOMODCACHE }}
     - name: Go Mod
       run: task app:mod
     - name: Go Build
@@ -115,8 +116,8 @@ jobs:
       with:
         key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
         path: |-
-          ${{ steps.go.outputs.cache }}
-          ${{ steps.go.outputs.modcache }}
+          ${{ env.GOCACHE }}
+          ${{ env.GOMODCACHE }}
   ################################################################################
   # Status Check
   ################################################################################
