@@ -8,8 +8,9 @@ runs:
     id: bun
     shell: bash
     run: echo "cache-dir=$(bun pm cache)" >> $GITHUB_OUTPUT
-  - name: Bun Global Cache
-    uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+  - name: Restore Bun Cache
+    id: cache-primes-restore
+    uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       key: bun-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/bun.lockb', '**/.aqua.yaml') }}
       path: |
@@ -18,3 +19,22 @@ runs:
   - name: Install Packages
     shell: bash
     run: bun install --frozen-lockfile
+  - name: Get Default Branch
+    id: gh
+    env:
+      GH_TOKEN: ${{ github.token }}
+    shell: bash
+    run: echo default_branch_ref_name="$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" >> "$GITHUB_OUTPUT"
+  - name: Show Branch
+    shell: bash
+    run: |
+      echo '"${{ github.ref_name }}"'
+      echo '"${{ steps.gh.outputs.default_branch_ref_name }}"'
+  - name: Save Bun Cache
+    if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.cache-primes-restore.outputs.cache-hit != 'true'
+    uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+    with:
+      key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
+      path: |-
+        ${{ steps.bun.outputs.cache-dir }}
+        **/node_modules
