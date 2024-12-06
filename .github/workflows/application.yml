@@ -10,17 +10,17 @@ on:
         default: 'application'
   pull_request:
     paths:
-    # Build
-    - 'Makefile'
+    # Tool
     - '.aqua.yaml'
     # Coverage
     - '.octocov.yml'
-    # GoReleaser
-    - '.goreleaser.yml'
     # GitHub Actions
     - '.github/actions/setup-go/action.yaml'
     - '.github/actions/setup-aqua/action.yaml'
     - '.github/workflows/application.yml'
+    # Task
+    - 'Taskfile.yml'
+    - 'tasks/**.task.yml'
     # Go
     - '**.go'
     - 'go.mod'
@@ -32,8 +32,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
   cancel-in-progress: true
 jobs:
-  ci:
-    name: CI
+  test:
+    name: Go Testing
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -54,24 +54,10 @@ jobs:
     ################################################################################
     # Go
     ################################################################################
-    - name: Go Mod Download
-      run: go mod download
-    - name: Go Mod Tidy
-      run: go mod tidy
-    - name: Go Tools
-      run: make tools
-    - name: Go Generate
-      run: make generate
-    - name: Go Vet
-      run: make vet
-    - name: Go Lint
-      run: make lint
-    - name: Go Sec
-      run: make sec
+    - name: Go Mod
+      run: task app:mod
     - name: Go Test
-      run: make test
-    - name: Go Build
-      run: make build
+      run: task app:test
     ################################################################################
     # Coverage
     ################################################################################
@@ -83,21 +69,3 @@ jobs:
           await exec.exec(`${toolpath}`)
       env:
         OCTOCOV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    ################################################################################
-    # GoReleaser
-    ################################################################################
-    - name: GoReleaser (${{ startsWith(github.ref, 'refs/tags/') && 'Release' || 'Snapshot' }})
-      run: make ${{ startsWith(github.ref, 'refs/tags/') && 'release' || 'snapshot' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    ################################################################################
-    # Artifact
-    ################################################################################
-    - name: Artifacts
-      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-      with:
-        name: Artifacts
-        path: |-
-          dist/*.tar.gz
-          dist/*.zip
-          dist/*.txt
