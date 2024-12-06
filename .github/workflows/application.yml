@@ -32,6 +32,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
   cancel-in-progress: true
 jobs:
+  ################################################################################
+  # Go Testing
+  ################################################################################
   test:
     name: Go Testing
     runs-on: ubuntu-latest
@@ -69,3 +72,21 @@ jobs:
           await exec.exec(`${toolpath}`)
       env:
         OCTOCOV_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  ################################################################################
+  # Status Check
+  ################################################################################
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions: {}
+    if: always()
+    needs:
+    - test
+    steps:
+    - name: Status Ok
+      if: success()
+      run: exit 0
+    - name: Status Ok
+      if: cancelled() || failure()
+      run: exit 1
