@@ -79,19 +79,22 @@ jobs:
   ################################################################################
   build:
     needs: matrix
-    name: Build (${{ matrix.targets.name }})
+    name: Build (${{ matrix.target }})
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions: {}
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.matrix.outputs.targets) }}
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
-    - name: Go Env
-      run: |
-        echo "GOOS=$(echo '${{ matrix.targets.name }}' | cut -d '/' -f 1)" >> $GITHUB_ENV
-        echo "GOARCH=$(echo '${{ matrix.targets.name }}' | cut -d '/' -f 2)" >> $GITHUB_ENV
+    - name: Go Env (GOOS)
+      run: echo GOOS="$(echo '${{ matrix.target }}' | cut -d '/' -f 1)" >> "$GITHUB_ENV"
+    - name: Go Env (GOARCH)
+      run: echo GOARCH="$(echo '${{ matrix.target }}' | cut -d '/' -f 2)" >> "$GITHUB_ENV"
     - name: Go Mod
       run: task app:mod
     - name: Go Build
