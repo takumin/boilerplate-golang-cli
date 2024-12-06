@@ -28,4 +28,4 @@ packages:
 - name: google/yamlfmt@v0.14.0
 - name: suzuki-shunsuke/ghalint@v1.0.0
 - name: suzuki-shunsuke/pinact@v1.0.0
-- name: go-task/task@v3.40.0
+- name: go-task/task@v3.40.1
