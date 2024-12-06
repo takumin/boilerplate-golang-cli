@@ -36,7 +36,7 @@ jobs:
   test:
     name: Testing
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 5
     permissions:
       contents: write
       pull-requests: write
@@ -104,7 +104,7 @@ jobs:
   ci:
     name: CI
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 3
     if: always()
     needs:
     - test
