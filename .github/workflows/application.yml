@@ -78,19 +78,23 @@ jobs:
     - name: Go Env (GOARCH)
       run: echo GOARCH="$(echo '${{ matrix.target }}' | cut -d '/' -f 2)" >> "$GITHUB_ENV"
     - name: Go Env (GOPATH)
-      run: echo GOPATH="$(echo "${HOME}/.usr")" >> "$GITHUB_ENV"
+      run: echo GOPATH="${HOME}/.usr" >> "$GITHUB_ENV"
     - name: Go Env (GOCACHE)
-      run: echo GOCACHE="$(echo "${HOME}/.cache/go-build")" >> "$GITHUB_ENV"
+      run: echo GOCACHE="${HOME}/.cache/go-build" >> "$GITHUB_ENV"
     - name: Go Env (GOMODCACHE)
-      run: echo GOMODCACHE="$(echo '${{ env.GOPATH }}/pkg/mod')" >> "$GITHUB_ENV"
-    - name: Restore Go Cache
-      id: cache-primes-restore
+      run: echo GOMODCACHE='${{ env.GOPATH }}/pkg/mod' >> "$GITHUB_ENV"
+    - name: Restore Go Mod Cache
+      id: mod-cache-primes-restore
+      uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        key: go-mod-${{ steps.go.outputs.version }}-${{ hashFiles('**/go.sum') }}
+        path: ${{ env.GOMODCACHE }}
+    - name: Restore Go Build Cache
+      id: build-cache-primes-restore
       uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
         key: go-build-${{ steps.go.outputs.version }}-${{ env.GOOS }}-${{ env.GOARCH }}-${{ hashFiles('**/go.sum') }}
-        path: |
-          ${{ env.GOCACHE }}
-          ${{ env.GOMODCACHE }}
+        path: ${{ env.GOCACHE }}
     - name: Go Mod
       run: task app:mod
     - name: Go Build
@@ -110,14 +114,18 @@ jobs:
         GH_TOKEN: ${{ github.token }}
       shell: bash
       run: echo default_branch_ref_name="$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" >> "$GITHUB_OUTPUT"
-    - name: Save Aqua Cache
-      if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.cache-primes-restore.outputs.cache-hit != 'true'
+    - name: Save Go Mod Cache
+      if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.mod-cache-primes-restore.outputs.cache-hit != 'true'
       uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
-        key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
-        path: |-
-          ${{ env.GOCACHE }}
-          ${{ env.GOMODCACHE }}
+        key: ${{ steps.mod-cache-primes-restore.outputs.cache-primary-key }}
+        path: ${{ env.GOMODCACHE }}
+    - name: Save Go Build Cache
+      if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.build-cache-primes-restore.outputs.cache-hit != 'true'
+      uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+      with:
+        key: ${{ steps.build-cache-primes-restore.outputs.cache-primary-key }}
+        path: ${{ env.GOCACHE }}
   ################################################################################
   # Status Check
   ################################################################################
