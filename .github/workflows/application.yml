@@ -2,26 +2,9 @@
 name: Application
 on:
   workflow_call:
-  pull_request:
-    paths:
-    # Tool
-    - '.aqua.yaml'
-    # Coverage
-    - '.octocov.yml'
-    # GitHub Actions
-    - '.github/actions/setup-go/action.yaml'
-    - '.github/actions/setup-aqua/action.yaml'
-    - '.github/workflows/application.yml'
-    # Task
-    - 'Taskfile.yml'
-    - 'tasks/**.task.yml'
-    # Go
-    - '**.go'
-    - 'go.mod'
-    - 'go.sum'
 permissions: {}
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: application-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ################################################################################

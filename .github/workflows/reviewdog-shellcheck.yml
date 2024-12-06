@@ -2,28 +2,19 @@
 name: Reviewdog (shellcheck)
 on:
   workflow_call:
-  pull_request:
-    paths:
-    - '.github/actions/setup-go/action.yaml'
-    - '.github/actions/setup-aqua/action.yaml'
-    - '.github/actions/setup-reviewdog/action.yaml'
-    - '.github/workflows/reviewdog-shellcheck.yml'
-    - '.aqua.yaml'
-    - '.reviewdog.yml'
-    - '**.sh'
-    - '**.bash'
-permissions:
-  checks: write
-  contents: read
-  pull-requests: write
+permissions: {}
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: reviewdog-shellcheck-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ci:
     name: CI
     runs-on: ubuntu-latest
     timeout-minutes: 3
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2

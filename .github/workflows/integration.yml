@@ -3,56 +3,168 @@ name: CI
 on:
   push:
     branches:
-    - 'main'
+    - main
     tags:
     - 'v*'
+  pull_request:
 permissions: {}
 jobs:
+  ##############################################################################
+  # Path Filter
+  ##############################################################################
+  path-filter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      application: ${{ steps.changes.outputs.application }}
+      renovate-config-validator: ${{ steps.changes.outputs.renovate-config-validator }}
+      reviewdog-actionlint: ${{ steps.changes.outputs.reviewdog-actionlint }}
+      reviewdog-editorconfig-checker: ${{ steps.changes.outputs.reviewdog-editorconfig-checker }}
+      reviewdog-gjson-validate: ${{ steps.changes.outputs.reviewdog-gjson-validate }}
+      reviewdog-gofmt: ${{ steps.changes.outputs.reviewdog-gofmt }}
+      reviewdog-gosec: ${{ steps.changes.outputs.reviewdog-gosec }}
+      reviewdog-govet: ${{ steps.changes.outputs.reviewdog-govet }}
+      reviewdog-gyaml-validate: ${{ steps.changes.outputs.reviewdog-gyaml-validate }}
+      reviewdog-shellcheck: ${{ steps.changes.outputs.reviewdog-shellcheck }}
+      reviewdog-shfmt: ${{ steps.changes.outputs.reviewdog-shfmt }}
+      reviewdog-staticcheck: ${{ steps.changes.outputs.reviewdog-staticcheck }}
+    steps:
+    - uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+      id: changes
+      with:
+        filters: .github/filters.yml
+  ##############################################################################
+  # Workflow Calls
+  ##############################################################################
   application:
     name: Application
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.application == 'true' }}
+    permissions:
+      contents: write
+      pull-requests: write
     uses: ./.github/workflows/application.yml
-    permissions: {contents: write, pull-requests: write}
   renovate-config-validator:
     name: Renovate Config Validator
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.renovate-config-validator == 'true' }}
+    permissions:
+      contents: read
     uses: ./.github/workflows/renovate-config-validator.yml
-    permissions: {contents: read}
   reviewdog-actionlint:
     name: Reviewdog (actionlint)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-actionlint == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-actionlint.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-editorconfig-checker:
     name: Reviewdog (editorconfig-checker)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-editorconfig-checker == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-editorconfig-checker.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-gjson-validate:
     name: Reviewdog (gjson-validate)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gjson-validate == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-gjson-validate.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-gyaml-validate:
     name: Reviewdog (gyaml-validate)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gyaml-validate == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-gyaml-validate.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-gofmt:
     name: Reviewdog (gofmt)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gofmt == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-gofmt.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-gosec:
     name: Reviewdog (gosec)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gosec == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-gosec.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-govet:
     name: Reviewdog (govet)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-govet == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-govet.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-shellcheck:
     name: Reviewdog (shellcheck)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-shellcheck == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-shellcheck.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-shfmt:
     name: Reviewdog (shfmt)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-shfmt == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-shfmt.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
   reviewdog-staticcheck:
     name: Reviewdog (staticcheck)
+    needs: path-filter
+    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-staticcheck == 'true' }}
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
     uses: ./.github/workflows/reviewdog-staticcheck.yml
-    permissions: {contents: read, checks: write, pull-requests: write}
+  ##############################################################################
+  # Status Check
+  ##############################################################################
+  ci:
+    needs:
+    - application
+    - renovate-config-validator
+    - reviewdog-actionlint
+    - reviewdog-editorconfig-checker
+    - reviewdog-gjson-validate
+    - reviewdog-gofmt
+    - reviewdog-gosec
+    - reviewdog-govet
+    - reviewdog-gyaml-validate
+    - reviewdog-shellcheck
+    - reviewdog-shfmt
+    - reviewdog-staticcheck
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    if: failure()
+    steps:
+    - name: Failure Status
+      run: exit 1
