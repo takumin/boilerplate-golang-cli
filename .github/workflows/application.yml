@@ -33,10 +33,10 @@ concurrency:
   cancel-in-progress: true
 jobs:
   ################################################################################
-  # Go Testing
+  # Testing
   ################################################################################
   test:
-    name: Go Testing
+    name: Testing
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
