@@ -2,12 +2,6 @@
 name: Reviewdog (shfmt)
 on:
   workflow_call:
-    inputs:
-      jobname:
-        type: string
-        required: false
-        description: 'A jobname passed from the caller workflow'
-        default: 'reviewdog-shfmt'
   pull_request:
     paths:
     - '.github/actions/setup-go/action.yaml'
@@ -23,7 +17,7 @@ permissions:
   contents: read
   pull-requests: write
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ci:
