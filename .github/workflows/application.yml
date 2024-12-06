@@ -73,7 +73,7 @@ jobs:
       uses: ./.github/actions/setup-aqua
     - name: Setup matrix
       id: matrix
-      run: echo "targets=$(task app:build:matrix | jq -R '.' | jq --slurp)" >> "$GITHUB_OUTPUT"
+      run: echo targets="$(task app:build:matrix | jq -R '.' | jq --slurp)" >> "$GITHUB_OUTPUT"
   ################################################################################
   # Build
   ################################################################################
