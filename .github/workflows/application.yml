@@ -73,9 +73,11 @@ jobs:
     - name: Go Vars
       id: go
       run: |
-        echo version="$(go env GOVERSION | sed -E 's/^go//')" >> "$GITHUB_OUTPUT"
-        echo cache="$(go env GOCACHE)" >> "$GITHUB_OUTPUT"
-        echo modcache="$(go env GOMODCACHE)" >> "$GITHUB_OUTPUT"
+        {
+        echo version="$(go env GOVERSION | sed -E 's/^go//')"
+        echo cache="$(go env GOCACHE)"
+        echo modcache="$(go env GOMODCACHE)"
+        } >> "$GITHUB_OUTPUT"
     - name: Go Env (GOOS)
       run: echo GOOS="$(echo '${{ matrix.target }}' | cut -d '/' -f 1)" >> "$GITHUB_ENV"
     - name: Go Env (GOARCH)
