@@ -80,9 +80,9 @@ jobs:
     needs:
     - test
     steps:
-    - name: Status Ok
+    - name: Status OK
       if: success()
       run: exit 0
-    - name: Status Ok
+    - name: Status NG
       if: cancelled() || failure()
       run: exit 1
