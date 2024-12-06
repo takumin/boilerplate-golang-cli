@@ -2,26 +2,19 @@
 name: Reviewdog (actionlint)
 on:
   workflow_call:
-  pull_request:
-    paths:
-    - '.aqua.yaml'
-    - '.reviewdog.yml'
-    - '.github/actions/*.yml'
-    - '.github/actions/*.yaml'
-    - '.github/workflows/*.yml'
-    - '.github/workflows/*.yaml'
-permissions:
-  checks: write
-  contents: read
-  pull-requests: write
+permissions: {}
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: reviewdog-actionlint-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ci:
     name: CI
     runs-on: ubuntu-latest
     timeout-minutes: 3
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2

@@ -4,13 +4,14 @@ on:
   push:
     branches:
     - 'main'
-permissions:
-  contents: write
+permissions: {}
 jobs:
   run:
     name: Run
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
     if: ${{ !startsWith(github.repository, 'takumin/boilerplate-golang-cli') }}
     steps:
     - name: Checkout
