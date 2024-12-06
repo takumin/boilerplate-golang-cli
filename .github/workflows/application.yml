@@ -2,12 +2,6 @@
 name: Application
 on:
   workflow_call:
-    inputs:
-      jobname:
-        type: string
-        required: false
-        description: 'A jobname passed from the caller workflow'
-        default: 'application'
   pull_request:
     paths:
     # Tool
@@ -27,7 +21,7 @@ on:
     - 'go.sum'
 permissions: {}
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || inputs.jobname }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   ################################################################################
