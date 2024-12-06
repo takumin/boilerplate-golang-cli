@@ -7,19 +7,14 @@ runs:
   - name: Bun Variables
     id: bun
     shell: bash
-    run: |
-      echo "version=$(bun -v)" >> $GITHUB_OUTPUT
-      echo "cache-dir=$(bun pm cache)" >> $GITHUB_OUTPUT
+    run: echo "cache-dir=$(bun pm cache)" >> $GITHUB_OUTPUT
   - name: Bun Global Cache
     uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
-      path: '${{ steps.bun.outputs.cache-dir }}'
-      key: bun-${{ steps.bun.outputs.version }}-global-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
-  - name: Node Modules Cache
-    uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
-    with:
-      path: '**/node_modules'
-      key: bun-${{ steps.bun.outputs.version }}-node-modules-${{ runner.os }}-${{ hashFiles('**/bun.lockb') }}
+      key: bun-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/bun.lockb', '**/.aqua.yaml') }}
+      path: |
+        ${{ steps.bun.outputs.cache-dir }}
+        **/node_modules
   - name: Install Packages
     shell: bash
     run: bun install --frozen-lockfile
