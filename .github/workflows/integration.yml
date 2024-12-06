@@ -48,7 +48,9 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.application == 'true' }}
     permissions:
+      attestations: write
       contents: write
+      id-token: write
       pull-requests: write
     uses: ./.github/workflows/application.yml
   renovate-config-validator:
