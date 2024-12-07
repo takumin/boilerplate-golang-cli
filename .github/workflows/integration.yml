@@ -58,6 +58,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.renovate-config-validator == 'true' }}
     permissions:
+      actions: read
       contents: read
     uses: ./.github/workflows/renovate-config-validator.yml
   reviewdog-actionlint:
@@ -65,6 +66,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-actionlint == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -74,6 +76,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-editorconfig-checker == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -83,6 +86,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gjson-validate == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -92,6 +96,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gyaml-validate == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -101,6 +106,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gofmt == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -110,6 +116,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-gosec == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -119,6 +126,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-govet == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -128,6 +136,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-shellcheck == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -137,6 +146,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-shfmt == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
@@ -146,6 +156,7 @@ jobs:
     needs: path-filter
     if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.reviewdog-staticcheck == 'true' }}
     permissions:
+      actions: read
       contents: read
       checks: write
       pull-requests: write
