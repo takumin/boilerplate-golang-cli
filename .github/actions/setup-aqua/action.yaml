@@ -4,11 +4,12 @@ description: Setup Aqua by using cache and environment variables
 runs:
   using: composite
   steps:
-  - name: Set Go Cache Path
+  - name: Go Vars
+    id: go
     shell: bash
     run: |
-      echo GOPATH="${HOME}/.local/share/aquaproj-aqua-go" >> "$GITHUB_ENV"
-      echo GOCACHE="${HOME}/.local/share/aquaproj-aqua-go/bld" >> "$GITHUB_ENV"
+      echo GOPATH="${HOME}/.local/share/aquaproj-aqua-go" >> "$GITHUB_OUTPUT"
+      echo GOCACHE="${HOME}/.local/share/aquaproj-aqua-go/bld" >> "$GITHUB_OUTPUT"
   - name: Allow Local Registry
     shell: bash
     run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> "$GITHUB_ENV"
@@ -17,9 +18,7 @@ runs:
     uses: actions/cache/restore@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       key: aqua-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/.aqua.yaml') }}
-      path: |
-        ~/.local/share/aquaproj-aqua
-        ~/.local/share/aquaproj-aqua-go
+      path: ${{ steps.go.outputs.GOPATH }}
   - name: Setup Aqua
     uses: aquaproj/aqua-installer@f13c5d2f0357708d85477aabe50fd3f725528745 # v3.1.0
     with:
@@ -27,6 +26,9 @@ runs:
       enable_aqua_install: false
   - name: Install Tools
     shell: bash
+    env:
+      GOPATH: ${{ steps.go.outputs.GOPATH }}
+      GOCACHE: ${{ steps.go.outputs.GOCACHE }}
     run: |-
       aqua install --exclude-tags go --all
       aqua install --all
@@ -46,6 +48,4 @@ runs:
     uses: actions/cache/save@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
     with:
       key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
-      path: |-
-        ~/.local/share/aquaproj-aqua
-        ~/.local/share/aquaproj-aqua-go
+      path: ${{ steps.go.outputs.GOPATH }}
