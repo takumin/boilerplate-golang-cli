@@ -10,6 +10,17 @@ on:
 permissions: {}
 jobs:
   ##############################################################################
+  # Linter
+  ##############################################################################
+  linter:
+    name: Linter
+    permissions:
+      actions: read
+      checks: write
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/linter.yml
+  ##############################################################################
   # Path Filter
   ##############################################################################
   path-filter:
@@ -166,6 +177,7 @@ jobs:
   ##############################################################################
   ci:
     needs:
+    - linter
     - application
     - renovate-config-validator
     - reviewdog-actionlint

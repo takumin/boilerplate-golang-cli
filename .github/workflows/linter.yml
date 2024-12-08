@@ -1,0 +1,181 @@
+---
+name: Linter
+on:
+  workflow_call:
+permissions: {}
+concurrency:
+  group: linter-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  ##############################################################################
+  # Changes
+  ##############################################################################
+  changes:
+    name: Changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      github-actions: ${{ steps.changes.outputs.github-actions }}
+      linter-actions: ${{ steps.changes.outputs.linter-actions }}
+      setup-aqua: ${{ steps.changes.outputs.setup-aqua }}
+      setup-bun: ${{ steps.changes.outputs.setup-bun }}
+      setup-reviewdog: ${{ steps.changes.outputs.setup-reviewdog }}
+      renovate: ${{ steps.changes.outputs.renovate }}
+      octocov: ${{ steps.changes.outputs.octocov }}
+      go-task: ${{ steps.changes.outputs.go-task }}
+      json: ${{ steps.changes.outputs.json }}
+      yaml: ${{ steps.changes.outputs.yaml }}
+      toml: ${{ steps.changes.outputs.toml }}
+      shell: ${{ steps.changes.outputs.shell }}
+      go: ${{ steps.changes.outputs.go }}
+    steps:
+    - name: Path Filter
+      id: changes
+      uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
+      with:
+        filters: |
+          github-actions:
+          - '.github/actions/**.yml'
+          - '.github/actions/**.yaml'
+          - '.github/workflows/*.yml'
+          - '.github/workflows/*.yaml'
+          linter-actions:
+          - '.github/workflows/integration.yml'
+          - '.github/workflows/linter.yml'
+          setup-bun:
+          - '.github/actions/setup-bun/action.yaml'
+          - 'bun.lockb'
+          - 'package.json'
+          aqua:
+          - '.github/actions/setup-aqua/action.yaml'
+          - '.aqua.yaml'
+          renovate:
+          - '.renovaterc.json'
+          reviewdog:
+          - '.reviewdog.yml'
+          octocov:
+          - '.octocov.yml'
+          go-task:
+          - 'Taskfile.yml'
+          - 'tasks/**.yml'
+          - 'tasks/**.yaml'
+          json:
+          - '**.json'
+          - '!**.invalid.json'
+          yaml:
+          - '**.yml'
+          - '**.yaml'
+          - '!**.invalid.yml'
+          - '!**.invalid.yaml'
+          toml:
+          - '**.toml'
+          shell:
+          - '**.sh'
+          - '**.bash'
+          go:
+          - 'go.mod'
+          - 'go.sum'
+          - '**.go'
+  ##############################################################################
+  # Renovate Config Validator
+  ##############################################################################
+  renovate-config-validator:
+    needs: changes
+    name: Renovate Config Validator
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: read
+      contents: read
+    if: >-
+      ${{
+        (
+          github.ref_name == 'main' ||
+          github.ref_name == 'develop' ||
+          github.ref_name == 'release' ||
+          startsWith(github.ref_name, 'releases/') == 'true'
+        ) || (
+          needs.changes.outputs.linter-actions == 'true' ||
+          needs.changes.outputs.setup-aqua == 'true' ||
+          needs.changes.outputs.setup-bun == 'true' ||
+          needs.changes.outputs.renovate == 'true'
+        )
+      }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - name: Setup Aqua
+      uses: ./.github/actions/setup-aqua
+    - name: Setup Bun
+      uses: ./.github/actions/setup-bun
+    - name: Renovate Config Validator
+      run: bun run renovate-config-validator --strict
+  ##############################################################################
+  # Reviewdog Matrix
+  ##############################################################################
+  matrix:
+    needs: changes
+    name: Reviewdog Matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      targets: ${{ steps.matrix.outputs.result }}
+    steps:
+    - name: Check Needs
+      run: echo '${{ toJson(needs.changes.outputs) }}' | jq
+    - name: Convert JSON
+      id: needs
+      run: echo json="$(echo '${{ toJson(needs.changes.outputs) }}' | jq -cM)" >> "$GITHUB_OUTPUT"
+    - name: Check JSON
+      run: echo '${{ steps.needs.outputs.json }}'
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - name: Setup Matrix
+      id: matrix
+      uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+      with:
+        script: |-
+          const json = JSON.parse('${{ steps.needs.outputs.json }}');
+          const script = require('./scripts/reviewdog-matrix.cjs');
+          const result = script(json);
+          console.log(result);
+          return result;
+    - name: Show Matrix
+      run: echo '${{ steps.matrix.outputs.result }}' | jq
+  ##############################################################################
+  # Reviewdog Runner
+  ##############################################################################
+  reviewdog:
+    needs: matrix
+    name: Reviewdog (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.matrix.outputs.targets) }}
+    permissions:
+      actions: read
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - name: Setup Aqua
+      uses: ./.github/actions/setup-aqua
+    - name: Reviewdog Reporter Type
+      id: reporter
+      run: |-
+        case "${{ github.event_name }}" in
+        "push" )                echo "type=github-check" >> "$GITHUB_OUTPUT" ;;
+        "pull_request" )        echo "type=github-pr-review" >> "$GITHUB_OUTPUT" ;;
+        "pull_request_target" ) echo "type=github-pr-review" >> "$GITHUB_OUTPUT" ;;
+        * )                     echo "type=local" >> "$GITHUB_OUTPUT" ;;
+        esac
+    - name: Reviewdog
+      run: reviewdog -runners '${{ matrix.target }}' -reporter '${{ steps.reporter.outputs.type }}' -diff 'git diff FETCH_HEAD' -fail-level 'any'
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
