@@ -1,19 +1,19 @@
-module.exports = (changes) => {
-	var targets = ["editorconfig-checker"];
-	if (actionlint(changes)) {
+module.exports = ({ context, changes }) => {
+	const targets = ["editorconfig-checker"];
+	if (actions({ context, changes })) {
 		targets.push("actionlint");
 	}
-	if (json(changes)) {
+	if (json({ context, changes })) {
 		targets.push("gjson-validate");
 	}
-	if (yaml(changes)) {
+	if (yaml({ context, changes })) {
 		targets.push("gyaml-validate");
 	}
-	if (shell(changes)) {
+	if (shell({ context, changes })) {
 		targets.push("shellcheck");
 		targets.push("shfmt");
 	}
-	if (golang(changes)) {
+	if (golang({ context, changes })) {
 		targets.push("gofmt");
 		targets.push("gosec");
 		targets.push("govet");
@@ -22,62 +22,74 @@ module.exports = (changes) => {
 	return targets;
 };
 
-function actionlint(changes) {
+function branches(context) {
 	if (
-		changes["aqua"] === "true" ||
-		changes["reviewdog"] === "true" ||
+		context.ref === "refs/heads/main" ||
+		context.ref === "refs/heads/develop" ||
+		context.ref === "refs/heads/release" ||
+		context.ref.startsWith("refs/heads/releases/")
+	) {
+		return true;
+	}
+	return false;
+}
+
+function actions({ context, changes }) {
+	if (
+		branches(context) ||
+		changes.aqua === "true" ||
+		changes.reviewdog === "true" ||
 		changes["github-actions"] === "true"
 	) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
-function yaml(changes) {
+function yaml({ context, changes }) {
 	if (
-		changes["aqua"] === "true" ||
-		changes["reviewdog"] === "true" ||
-		changes["yaml"] === "true"
+		branches(context) ||
+		changes.aqua === "true" ||
+		changes.reviewdog === "true" ||
+		changes.yaml === "true"
 	) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
-function json(changes) {
+function json({ context, changes }) {
 	if (
-		changes["aqua"] === "true" ||
-		changes["reviewdog"] === "true" ||
-		changes["json"] === "true"
+		branches(context) ||
+		changes.aqua === "true" ||
+		changes.reviewdog === "true" ||
+		changes.json === "true"
 	) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
-function shell(changes) {
+function shell({ context, changes }) {
 	if (
-		changes["aqua"] === "true" ||
-		changes["reviewdog"] === "true" ||
-		changes["shell"] === "true"
+		branches(context) ||
+		changes.aqua === "true" ||
+		changes.reviewdog === "true" ||
+		changes.shell === "true"
 	) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
 
-function golang(changes) {
+function golang({ context, changes }) {
 	if (
-		changes["aqua"] === "true" ||
-		changes["reviewdog"] === "true" ||
-		changes["go"] === "true"
+		branches(context) ||
+		changes.aqua === "true" ||
+		changes.reviewdog === "true" ||
+		changes.go === "true"
 	) {
 		return true;
-	} else {
-		return false;
 	}
+	return false;
 }
