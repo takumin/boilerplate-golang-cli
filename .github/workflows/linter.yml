@@ -94,17 +94,14 @@ jobs:
       contents: read
     if: >-
       ${{
-        (
-          github.ref_name == 'main' ||
-          github.ref_name == 'develop' ||
-          github.ref_name == 'release' ||
-          startsWith(github.ref_name, 'releases/') == 'true'
-        ) || (
-          needs.changes.outputs.linter-actions == 'true' ||
-          needs.changes.outputs.setup-aqua == 'true' ||
-          needs.changes.outputs.setup-bun == 'true' ||
-          needs.changes.outputs.renovate == 'true'
-        )
+        github.ref_name == 'main' ||
+        github.ref_name == 'develop' ||
+        github.ref_name == 'release' ||
+        startsWith(github.ref_name, 'releases/') == 'true' ||
+        needs.changes.outputs.linter-actions == 'true' ||
+        needs.changes.outputs.setup-bun == 'true' ||
+        needs.changes.outputs.aqua == 'true' ||
+        needs.changes.outputs.renovate == 'true'
       }}
     steps:
     - name: Checkout
