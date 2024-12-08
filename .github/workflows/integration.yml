@@ -177,6 +177,7 @@ jobs:
   ##############################################################################
   ci:
     needs:
+    - linter
     - application
     - renovate-config-validator
     - reviewdog-actionlint
