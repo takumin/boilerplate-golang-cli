@@ -130,10 +130,12 @@ jobs:
     - name: Setup Matrix
       id: matrix
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+      env:
+        needs_json: ${{ toJson(needs.changes.outputs) }}
       with:
         script: |-
           const script = require('./scripts/linter-matrix.cjs');
-          console.log(script('${{ toJson(needs.changes.outputs) }}'));
+          console.log(script('${{ env.needs_json }}'));
     - name: Show Matrix
       run: echo '${{ steps.matrix.outputs.result }}' | jq
   ##############################################################################
