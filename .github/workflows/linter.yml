@@ -124,6 +124,7 @@ jobs:
     timeout-minutes: 3
     steps:
     - name: Generate Matrix
+      id: matrix
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
       with:
         script: |-
@@ -134,3 +135,5 @@ jobs:
             targets.push({name: "actionlint"});
           }
           return targets;
+    - name: Show JSON
+      run: echo '${{ steps.matrix.outputs.result }}'
