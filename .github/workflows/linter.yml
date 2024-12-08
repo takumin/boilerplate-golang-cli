@@ -139,7 +139,7 @@ jobs:
       with:
         script: |-
           const json = JSON.parse('${{ steps.needs.outputs.json }}');
-          const script = require('./scripts/linter-matrix.cjs');
+          const script = require('./scripts/reviewdog-matrix.cjs');
           const result = script(json);
           console.log(result);
           return result;
