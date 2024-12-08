@@ -142,7 +142,7 @@ jobs:
         script: |-
           const changes = JSON.parse('${{ steps.needs.outputs.json }}');
           const script = require('./scripts/reviewdog-matrix.cjs');
-          const result = script({github, changes});
+          const result = script({context, changes});
           console.log(result);
           return result;
     - name: Show Matrix
