@@ -21,43 +21,10 @@ jobs:
       pull-requests: write
     uses: ./.github/workflows/linter.yml
   ##############################################################################
-  # Path Filter
-  ##############################################################################
-  path-filter:
-    name: Path Filter
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    permissions:
-      contents: read
-      pull-requests: read
-    outputs:
-      application: ${{ steps.changes.outputs.application }}
-      renovate-config-validator: ${{ steps.changes.outputs.renovate-config-validator }}
-      reviewdog-actionlint: ${{ steps.changes.outputs.reviewdog-actionlint }}
-      reviewdog-editorconfig-checker: ${{ steps.changes.outputs.reviewdog-editorconfig-checker }}
-      reviewdog-gjson-validate: ${{ steps.changes.outputs.reviewdog-gjson-validate }}
-      reviewdog-gofmt: ${{ steps.changes.outputs.reviewdog-gofmt }}
-      reviewdog-gosec: ${{ steps.changes.outputs.reviewdog-gosec }}
-      reviewdog-govet: ${{ steps.changes.outputs.reviewdog-govet }}
-      reviewdog-gyaml-validate: ${{ steps.changes.outputs.reviewdog-gyaml-validate }}
-      reviewdog-shellcheck: ${{ steps.changes.outputs.reviewdog-shellcheck }}
-      reviewdog-shfmt: ${{ steps.changes.outputs.reviewdog-shfmt }}
-      reviewdog-staticcheck: ${{ steps.changes.outputs.reviewdog-staticcheck }}
-    steps:
-    - name: Checkout
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-    - name: Path Filter
-      id: changes
-      uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 # v3.0.2
-      with:
-        filters: .github/filters.yml
-  ##############################################################################
-  # Workflow Calls
+  # Application
   ##############################################################################
   application:
     name: Application
-    needs: path-filter
-    if: ${{ github.ref_name == 'main' || needs.path-filter.outputs.application == 'true' }}
     permissions:
       attestations: write
       contents: write
