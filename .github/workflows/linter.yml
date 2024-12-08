@@ -133,7 +133,7 @@ jobs:
       with:
         script: |-
           const script = require('./scripts/linter-matrix.cjs');
-          console.log(script(needs.changes.outputs));
+          console.log(script('${{ toJson(needs.changes.outputs) }}'));
     - name: Show Matrix
       run: echo '${{ steps.matrix.outputs.result }}' | jq
   ##############################################################################
