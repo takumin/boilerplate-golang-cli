@@ -130,7 +130,7 @@ jobs:
         script: |-
           var targets = [];
           if (
-            ${{ needs.changes.outputs.github-actions }} === 'true'
+            '${{ needs.changes.outputs.github-actions }}' === 'true'
           ) {
             targets.push({name: "actionlint"});
           }
