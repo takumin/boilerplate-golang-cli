@@ -126,7 +126,7 @@ jobs:
       targets: ${{ steps.matrix.outputs.result }}
     steps:
     - name: Check Needs
-      run: echo '${{ toJson(needs.changes.outputs) }}' | jq -R '.' | jq --slurp
+      run: echo '${{ toJson(needs.changes.outputs) }}' | jq
     - name: Convert JSON
       id: needs
       run: echo json="$(echo '${{ toJson(needs.changes.outputs) }}' | jq -R '.' | jq -cM --slurp)" >> "$GITHUB_OUTPUT"
