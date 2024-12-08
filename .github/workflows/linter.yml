@@ -129,7 +129,7 @@ jobs:
       run: echo '${{ toJson(needs.changes.outputs) }}' | jq
     - name: Convert JSON
       id: needs
-      run: echo json="$(echo '${{ toJson(needs.changes.outputs) }}' | jq -R '.' | jq -cM --slurp)" >> "$GITHUB_OUTPUT"
+      run: echo json="$(echo '${{ toJson(needs.changes.outputs) }}' | jq -cM)" >> "$GITHUB_OUTPUT"
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
     - name: Setup Matrix
