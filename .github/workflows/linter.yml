@@ -170,10 +170,10 @@ jobs:
       id: reporter
       run: |-
         case "${{ github.event_name }}" in
-        "push" )                echo "type=github-check" >> $GITHUB_OUTPUT ;;
-        "pull_request" )        echo "type=github-pr-review" >> $GITHUB_OUTPUT ;;
-        "pull_request_target" ) echo "type=github-pr-review" >> $GITHUB_OUTPUT ;;
-        * )                     echo "type=local" >> $GITHUB_OUTPUT ;;
+        "push" )                echo "type=github-check" >> "$GITHUB_OUTPUT" ;;
+        "pull_request" )        echo "type=github-pr-review" >> "$GITHUB_OUTPUT" ;;
+        "pull_request_target" ) echo "type=github-pr-review" >> "$GITHUB_OUTPUT" ;;
+        * )                     echo "type=local" >> "$GITHUB_OUTPUT" ;;
         esac
     - name: Reviewdog
       run: reviewdog -runners '${{ matrix.target }}' -reporter '${{ steps.reporter.outputs.type }}' -diff 'git diff FETCH_HEAD' -fail-level 'any'
