@@ -1,6 +1,6 @@
-module.exports = (needs) => {
+module.exports = (changes) => {
 	var targets = [];
-	if (needs["github-actions"] === "true") {
+	if (changes["github-actions"] === "true") {
 		targets.push("actionlint");
 	}
 	return targets;
