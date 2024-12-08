@@ -117,13 +117,15 @@ jobs:
   ##############################################################################
   # Reviewdog Matrix
   ##############################################################################
-  reviewdog-matrix:
+  matrix:
     needs: changes
     name: Reviewdog Matrix
     runs-on: ubuntu-latest
     timeout-minutes: 3
+    outputs:
+      targets: ${{ steps.matrix.outputs.result }}
     steps:
-    - name: Generate Matrix
+    - name: Setup Matrix
       id: matrix
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
       with:
@@ -132,8 +134,36 @@ jobs:
           if (
             '${{ needs.changes.outputs.github-actions }}' === 'true'
           ) {
-            targets.push({name: "actionlint"});
+            targets.push("actionlint");
           }
           return targets;
-    - name: Show JSON
-      run: echo '${{ steps.matrix.outputs.result }}'
+    - name: Show Matrix
+      run: echo '${{ steps.matrix.outputs.result }}' | jq
+  ##############################################################################
+  # Reviewdog Runner
+  ##############################################################################
+  reviewdog:
+    needs: reviewdog-matrix
+    name: Reviewdog (${{ matrix.target }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        target: ${{ fromJson(needs.matrix.outputs.targets) }}
+    permissions:
+      actions: read
+      checks: write
+      contents: read
+      pull-requests: write
+    steps:
+    - name: Checkout
+      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+    - name: Setup Aqua
+      uses: ./.github/actions/setup-aqua
+    - name: Setup Reviewdog
+      id: reviewdog
+      uses: ./.github/actions/setup-reviewdog
+    - name: Reviewdog
+      run: reviewdog -runners '${{ matrix.target }}' -reporter '${{ steps.reviewdog.outputs.reporter }}' -diff 'git diff FETCH_HEAD' -fail-on-error
+      env:
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
