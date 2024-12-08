@@ -48,7 +48,7 @@ jobs:
         github.ref_name == 'main' ||
         github.ref_name == 'develop' ||
         github.ref_name == 'release' ||
-        startsWith(github.ref_name, 'releases/') == 'true'
+        startsWith(github.ref_name, 'releases/') == 'true' ||
         needs.changes.outputs.application == 'true'
       }}
     runs-on: ubuntu-latest
@@ -84,7 +84,7 @@ jobs:
         github.ref_name == 'main' ||
         github.ref_name == 'develop' ||
         github.ref_name == 'release' ||
-        startsWith(github.ref_name, 'releases/') == 'true'
+        startsWith(github.ref_name, 'releases/') == 'true' ||
         needs.changes.outputs.application == 'true'
       }}
     runs-on: ubuntu-latest
