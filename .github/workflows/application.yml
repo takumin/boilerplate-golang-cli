@@ -41,8 +41,16 @@ jobs:
   # Testing
   ################################################################################
   test:
-    needs: changes
     name: Testing
+    needs: changes
+    if: >-
+      ${{
+        github.ref_name == 'main' ||
+        github.ref_name == 'develop' ||
+        github.ref_name == 'release' ||
+        startsWith(github.ref_name, 'releases/') == 'true'
+        needs.changes.outputs.application == 'true'
+      }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -69,8 +77,16 @@ jobs:
   # Matrix
   ################################################################################
   matrix:
-    needs: changes
     name: Matrix
+    needs: changes
+    if: >-
+      ${{
+        github.ref_name == 'main' ||
+        github.ref_name == 'develop' ||
+        github.ref_name == 'release' ||
+        startsWith(github.ref_name, 'releases/') == 'true'
+        needs.changes.outputs.application == 'true'
+      }}
     runs-on: ubuntu-latest
     timeout-minutes: 3
     outputs:
