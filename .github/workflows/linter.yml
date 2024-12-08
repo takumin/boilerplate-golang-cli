@@ -20,10 +20,10 @@ jobs:
     outputs:
       github-actions: ${{ steps.changes.outputs.github-actions }}
       linter-actions: ${{ steps.changes.outputs.linter-actions }}
-      setup-aqua: ${{ steps.changes.outputs.setup-aqua }}
       setup-bun: ${{ steps.changes.outputs.setup-bun }}
-      setup-reviewdog: ${{ steps.changes.outputs.setup-reviewdog }}
+      aqua: ${{ steps.changes.outputs.aqua }}
       renovate: ${{ steps.changes.outputs.renovate }}
+      reviewdog: ${{ steps.changes.outputs.reviewdog }}
       octocov: ${{ steps.changes.outputs.octocov }}
       go-task: ${{ steps.changes.outputs.go-task }}
       json: ${{ steps.changes.outputs.json }}
