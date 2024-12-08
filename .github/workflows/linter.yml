@@ -123,4 +123,6 @@ jobs:
     timeout-minutes: 3
     steps:
     - name: Check Raw Filter
-      run: echo '${{needs.changes.outputs.*}}'
+      run: echo '${{ needs.changes.outputs.* }}'
+    - name: Check JSON Filter
+      run: echo '${{ fromJSON(needs.changes.outputs.*) }}'
