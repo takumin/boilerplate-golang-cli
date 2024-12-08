@@ -142,7 +142,8 @@ jobs:
           const json = JSON.parse('${{ steps.needs.outputs.json }}');
           const script = require('./scripts/linter-matrix.cjs');
           const result = script(json);
-          script(result);
+          console.log(result);
+          return script(result);
     - name: Show Matrix
       run: echo '${{ steps.matrix.outputs.result }}' | jq
   ##############################################################################
