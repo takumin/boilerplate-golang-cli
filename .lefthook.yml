@@ -33,6 +33,10 @@ pre-commit:
       glob: "*.{yaml,yml}"
       run: gyaml validate {staged_files}
       stage_fixed: true
+    yamlfmt:
+      glob: "*.{yaml,yml}"
+      run: yamlfmt {staged_files}
+      stage_fixed: true
     gofmt:
       glob: "*.{go}"
       run: gofmt -s -w {staged_files}
