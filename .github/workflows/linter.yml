@@ -45,13 +45,13 @@ jobs:
           linter-actions:
           - '.github/workflows/integration.yml'
           - '.github/workflows/linter.yml'
-          setup-aqua:
-          - '.github/actions/setup-aqua/action.yaml'
-          - '.aqua.yaml'
           setup-bun:
           - '.github/actions/setup-bun/action.yaml'
           - 'bun.lockb'
           - 'package.json'
+          aqua:
+          - '.github/actions/setup-aqua/action.yaml'
+          - '.aqua.yaml'
           renovate:
           - '.renovaterc.json'
           reviewdog:
