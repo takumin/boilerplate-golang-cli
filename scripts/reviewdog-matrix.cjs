@@ -2,6 +2,8 @@ module.exports = ({ context, changes }) => {
 	const targets = ["editorconfig-checker"];
 	if (actions({ context, changes })) {
 		targets.push("actionlint");
+		targets.push("ghalint-run");
+		targets.push("ghalint-act");
 	}
 	if (json({ context, changes })) {
 		targets.push("gjson-validate");
