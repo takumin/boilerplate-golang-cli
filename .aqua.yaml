@@ -25,7 +25,7 @@ packages:
 - name: oven-sh/bun@bun-v1.1.42
 - name: k1LoW/octocov@v0.62.4
 - name: google/yamlfmt@v0.14.0
-- name: suzuki-shunsuke/ghalint@v1.2.0
+- name: suzuki-shunsuke/ghalint@v1.2.1
 - name: suzuki-shunsuke/pinact@v1.1.2
 - name: go-task/task@v3.40.1
 - name: evilmartians/lefthook@v1.10.1
