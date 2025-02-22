@@ -23,7 +23,7 @@ packages:
 - name: takumin/gyaml@v0.0.2
 - name: editorconfig-checker/editorconfig-checker@v3.2.0
 - name: oven-sh/bun@bun-v1.2.3
-- name: k1LoW/octocov@v0.62.6
+- name: k1LoW/octocov@v0.63.0
 - name: google/yamlfmt@v0.16.0
 - name: suzuki-shunsuke/ghalint@v1.2.3
 - name: suzuki-shunsuke/pinact@v1.2.1
