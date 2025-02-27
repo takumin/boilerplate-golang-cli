@@ -15,7 +15,7 @@ runs:
     run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> "$GITHUB_ENV"
   - name: Restore Aqua Cache
     id: cache-primes-restore
-    uses: actions/cache/restore@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+    uses: actions/cache/restore@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
     with:
       key: aqua-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/.aqua.yaml') }}
       path: |-
@@ -47,7 +47,7 @@ runs:
       echo '"${{ steps.gh.outputs.default_branch_ref_name }}"'
   - name: Save Aqua Cache
     if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.cache-primes-restore.outputs.cache-hit != 'true'
-    uses: actions/cache/save@0c907a75c2c80ebcb7f088228285e798b750cf8f # v4.2.1
+    uses: actions/cache/save@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
     with:
       key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
       path: |-
