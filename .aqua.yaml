@@ -26,6 +26,6 @@ packages:
 - name: k1LoW/octocov@v0.64.0
 - name: google/yamlfmt@v0.16.0
 - name: suzuki-shunsuke/ghalint@v1.2.3
-- name: suzuki-shunsuke/pinact@v1.2.1
+- name: suzuki-shunsuke/pinact@v1.2.2
 - name: go-task/task@v3.41.0
 - name: evilmartians/lefthook@v1.11.2
