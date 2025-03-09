@@ -20,7 +20,7 @@ jobs:
     outputs:
       github-actions: ${{ steps.changes.outputs.github-actions }}
       linter-actions: ${{ steps.changes.outputs.linter-actions }}
-      setup-bun: ${{ steps.changes.outputs.setup-bun }}
+      bun: ${{ steps.changes.outputs.bun }}
       aqua: ${{ steps.changes.outputs.aqua }}
       renovate: ${{ steps.changes.outputs.renovate }}
       reviewdog: ${{ steps.changes.outputs.reviewdog }}
@@ -49,9 +49,9 @@ jobs:
           linter-actions:
           - '.github/workflows/integration.yml'
           - '.github/workflows/linter.yml'
-          setup-bun:
+          bun:
           - '.github/actions/setup-bun/action.yaml'
-          - 'bun.lockb'
+          - 'bun.lock'
           - 'package.json'
           aqua:
           - '.github/actions/setup-aqua/action.yaml'
@@ -101,7 +101,7 @@ jobs:
         github.ref_name == 'release' ||
         startsWith(github.ref_name, 'releases/') == 'true' ||
         needs.changes.outputs.linter-actions == 'true' ||
-        needs.changes.outputs.setup-bun == 'true' ||
+        needs.changes.outputs.bun == 'true' ||
         needs.changes.outputs.aqua == 'true' ||
         needs.changes.outputs.renovate == 'true'
       }}

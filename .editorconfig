@@ -20,8 +20,5 @@ indent_style = space
 [{LICENSE,*.md}]
 indent_style = unset
 
-[bun.lockb]
-end_of_line              = unset
-indent_style             = unset
-insert_final_newline     = unset
-trim_trailing_whitespace = unset
+[bun.lock]
+indent_style = space
