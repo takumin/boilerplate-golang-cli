@@ -182,3 +182,15 @@ jobs:
       with:
         key: ${{ steps.build-cache-primes-restore.outputs.cache-primary-key }}
         path: ${{ env.GOCACHE }}
+  ##############################################################################
+  # CI
+  ##############################################################################
+  ci:
+    needs: build
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ !cancelled() && !failure() }}
+    steps:
+    - name: Success Status
+      run: exit 0
