@@ -1,6 +1,6 @@
 module github.com/takumin/boilerplate-golang-cli
 
-go 1.23.6
+go 1.24.1
 
 require github.com/urfave/cli/v2 v2.27.6
 
