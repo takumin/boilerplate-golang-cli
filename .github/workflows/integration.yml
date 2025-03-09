@@ -41,7 +41,7 @@ jobs:
     name: CI
     runs-on: ubuntu-latest
     timeout-minutes: 3
-    if: failure()
+    if: ${{ failure() || cancelled() }}
     steps:
     - name: Failure Status
       run: exit 1
