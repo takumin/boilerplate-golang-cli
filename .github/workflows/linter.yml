@@ -51,7 +51,7 @@ jobs:
           - '.github/workflows/linter.yml'
           bun:
           - '.github/actions/setup-bun/action.yaml'
-          - 'bun.lockb'
+          - 'bun.lock'
           - 'package.json'
           aqua:
           - '.github/actions/setup-aqua/action.yaml'
