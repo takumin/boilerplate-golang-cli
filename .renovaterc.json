@@ -12,6 +12,10 @@
 	},
 	"packageRules": [
 		{
+			"groupName": "go",
+			"matchPackageNames": ["go", "golang/go"]
+		},
+		{
 			"matchDatasources": ["golang-version"],
 			"rangeStrategy": "bump"
 		},
