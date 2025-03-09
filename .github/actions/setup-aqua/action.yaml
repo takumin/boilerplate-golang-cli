@@ -4,15 +4,6 @@ description: Setup Aqua by using cache and environment variables
 runs:
   using: composite
   steps:
-  - name: Go Vars
-    id: go
-    shell: bash
-    run: |-
-      echo GOPATH="${HOME}/.local/share/aquaproj-aqua-go" >> "$GITHUB_OUTPUT"
-      echo GOCACHE="${HOME}/.local/share/aquaproj-aqua-go/bld" >> "$GITHUB_OUTPUT"
-  - name: Allow Local Registry
-    shell: bash
-    run: echo "AQUA_POLICY_CONFIG=${{ github.workspace }}/.aqua-policy.yaml" >> "$GITHUB_ENV"
   - name: Restore Aqua Cache
     id: cache-primes-restore
     uses: actions/cache/restore@d4323d4df104b026a6aa633fdb11d772146be0bf # v4.2.2
@@ -20,20 +11,11 @@ runs:
       key: aqua-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/.aqua.yaml') }}
       path: |-
         ~/.local/share/aquaproj-aqua
-        ${{ steps.go.outputs.GOPATH }}
   - name: Setup Aqua
     uses: aquaproj/aqua-installer@e2d0136abcf70b7a2f6f505720640750557c4b33 # v3.1.1
     with:
       aqua_version: v2.45.0
-      enable_aqua_install: false
-  - name: Install Tools
-    shell: bash
-    env:
-      GOPATH: ${{ steps.go.outputs.GOPATH }}
-      GOCACHE: ${{ steps.go.outputs.GOCACHE }}
-    run: |-
-      aqua install --exclude-tags go --all
-      aqua install --all
+      aqua_opts: -a
   - name: Get Default Branch
     id: gh
     env:
@@ -52,4 +34,3 @@ runs:
       key: ${{ steps.cache-primes-restore.outputs.cache-primary-key }}
       path: |-
         ~/.local/share/aquaproj-aqua
-        ${{ steps.go.outputs.GOPATH }}

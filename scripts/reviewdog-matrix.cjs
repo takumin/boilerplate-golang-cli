@@ -19,7 +19,7 @@ module.exports = ({ context, changes }) => {
 		targets.push("gofmt");
 		targets.push("gosec");
 		targets.push("govet");
-		targets.push("staticcheck");
+		targets.push("golangci-lint");
 	}
 	return targets;
 };

@@ -38,8 +38,8 @@ func TestMainCommand(t *testing.T) {
 	wo.Close()
 	we.Close()
 
-	io.Copy(io.Discard, ro)
-	io.Copy(io.Discard, re)
+	io.Copy(io.Discard, ro) //nolint:all
+	io.Copy(io.Discard, re) //nolint:all
 
 	expect := command.ExitOK
 	actual := capture

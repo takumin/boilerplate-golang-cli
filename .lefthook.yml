@@ -49,7 +49,7 @@ pre-commit:
       files: git ls-files -m
       glob: "*.{go}"
       run: go vet ./...
-    staticcheck:
+    golangci-lint:
       files: git ls-files -m
       glob: "*.{go}"
-      run: staticcheck ./...
+      run: golangci-lint run ./...

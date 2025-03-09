@@ -22,7 +22,7 @@ tasks:
     - gofmt
     - govet
     - gosec
-    - staticcheck
+    - golangci-lint
     - actionlint
     - ghalint-run
     - ghalint-act
@@ -166,7 +166,7 @@ tasks:
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  staticcheck:
+  golangci-lint:
     run: once
     sources:
     - 'go.work'
