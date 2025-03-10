@@ -22,5 +22,5 @@ packages:
 - name: google/yamlfmt@v0.16.0
 - name: suzuki-shunsuke/ghalint@v1.2.3
 - name: suzuki-shunsuke/pinact@v1.2.2
-- name: go-task/task@v3.42.0
+- name: go-task/task@v3.42.1
 - name: evilmartians/lefthook@v1.11.3
