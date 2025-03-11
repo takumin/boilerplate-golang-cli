@@ -17,7 +17,7 @@ packages:
 - name: aquasecurity/trivy@v0.60.0
 - name: takumin/gyaml@v0.0.2
 - name: editorconfig-checker/editorconfig-checker@v3.2.0
-- name: oven-sh/bun@bun-v1.2.4
+- name: oven-sh/bun@bun-v1.2.5
 - name: k1LoW/octocov@v0.64.0
 - name: google/yamlfmt@v0.16.0
 - name: suzuki-shunsuke/ghalint@v1.2.3
