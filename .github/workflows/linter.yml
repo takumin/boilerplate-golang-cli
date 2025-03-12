@@ -68,12 +68,9 @@ jobs:
           - 'tasks/**.yaml'
           json:
           - '**.json'
-          - '!**.invalid.json'
           yaml:
           - '**.yml'
           - '**.yaml'
-          - '!**.invalid.yml'
-          - '!**.invalid.yaml'
           toml:
           - '**.toml'
           shell:
