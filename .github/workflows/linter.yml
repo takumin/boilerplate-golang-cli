@@ -180,6 +180,7 @@ jobs:
         * )                     echo "type=local" >> "$GITHUB_OUTPUT" ;;
         esac
     - name: Reviewdog
-      run: reviewdog -runners '${{ matrix.target }}' -reporter '${{ steps.reporter.outputs.type }}' -diff 'git diff FETCH_HEAD' -fail-level 'any'
+      run: reviewdog -runners "${MATRIX_TARGET}" -reporter '${{ steps.reporter.outputs.type }}' -diff 'git diff FETCH_HEAD' -fail-level 'any'
       env:
+        MATRIX_TARGET: ${{ matrix.target }}
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
