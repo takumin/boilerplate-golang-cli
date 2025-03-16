@@ -125,12 +125,18 @@ jobs:
       targets: ${{ steps.matrix.outputs.result }}
     steps:
     - name: Check Needs
-      run: echo '${{ toJson(needs.changes.outputs) }}' | jq
+      run: echo "${NEEDS_CHANGES_OUTPUTS_JSON}" | jq
+      env:
+        NEEDS_CHANGES_OUTPUTS_JSON: ${{ toJson(needs.changes.outputs) }}
     - name: Convert JSON
       id: needs
-      run: echo json="$(echo '${{ toJson(needs.changes.outputs) }}' | jq -cM)" >> "$GITHUB_OUTPUT"
+      run: echo json="$(echo "${NEEDS_CHANGES_OUTPUTS_JSON}" | jq -cM)" >> "$GITHUB_OUTPUT"
+      env:
+        NEEDS_CHANGES_OUTPUTS_JSON: ${{ toJson(needs.changes.outputs) }}
     - name: Check JSON
-      run: echo '${{ steps.needs.outputs.json }}'
+      run: echo "${NEEDS_OUTPUTS_JSON}"
+      env:
+        NEEDS_OUTPUTS_JSON: ${{ steps.needs.outputs.json }}
     - name: Checkout
       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
@@ -140,13 +146,17 @@ jobs:
       uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
       with:
         script: |-
-          const changes = JSON.parse('${{ steps.needs.outputs.json }}');
+          const changes = JSON.parse(process.env.NEEDS_OUTPUTS_JSON);
           const script = require('./scripts/reviewdog-matrix.cjs');
           const result = script({context, changes});
           console.log(result);
           return result;
+      env:
+        NEEDS_OUTPUTS_JSON: ${{ steps.needs.outputs.json }}
     - name: Show Matrix
-      run: echo '${{ steps.matrix.outputs.result }}' | jq
+      run: echo "${MATRIX_OUTPUTS_RESULT}" | jq
+      env:
+        MATRIX_OUTPUTS_RESULT: ${{ steps.matrix.outputs.result }}
   ##############################################################################
   # Reviewdog Runner
   ##############################################################################
@@ -180,7 +190,8 @@ jobs:
         * )                     echo "type=local" >> "$GITHUB_OUTPUT" ;;
         esac
     - name: Reviewdog
-      run: reviewdog -runners "${MATRIX_TARGET}" -reporter '${{ steps.reporter.outputs.type }}' -diff 'git diff FETCH_HEAD' -fail-level 'any'
+      run: reviewdog -runners "${MATRIX_TARGET}" -reporter "${REPORTER_TYPE}" -diff 'git diff FETCH_HEAD' -fail-level 'any'
       env:
         MATRIX_TARGET: ${{ matrix.target }}
+        REPORTER_TYPE: ${{ steps.reporter.outputs.type }}
         REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
