@@ -130,9 +130,13 @@ jobs:
       id: go
       run: echo version="$(go env GOVERSION | sed -E 's/^go//')" >> "$GITHUB_OUTPUT"
     - name: Go Env (GOOS)
-      run: echo GOOS="$(echo '${{ matrix.target }}' | cut -d '/' -f 1)" >> "$GITHUB_ENV"
+      run: echo GOOS="$(echo "${MATRIX_TARGET}" | cut -d '/' -f 1)" >> "$GITHUB_ENV"
+      env:
+        MATRIX_TARGET: ${{ matrix.target }}
     - name: Go Env (GOARCH)
-      run: echo GOARCH="$(echo '${{ matrix.target }}' | cut -d '/' -f 2)" >> "$GITHUB_ENV"
+      run: echo GOARCH="$(echo "${MATRIX_TARGET}" | cut -d '/' -f 2)" >> "$GITHUB_ENV"
+      env:
+        MATRIX_TARGET: ${{ matrix.target }}
     - name: Go Env (GOPATH)
       run: echo GOPATH="${HOME}/.usr" >> "$GITHUB_ENV"
     - name: Go Env (GOCACHE)
