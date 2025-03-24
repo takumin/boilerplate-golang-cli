@@ -23,4 +23,4 @@ packages:
 - name: suzuki-shunsuke/ghalint@v1.2.3
 - name: suzuki-shunsuke/pinact@v2.0.4
 - name: go-task/task@v3.42.1
-- name: evilmartians/lefthook@v1.11.3
+- name: evilmartians/lefthook@v1.11.4
