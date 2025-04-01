@@ -24,6 +24,9 @@ vars:
   LDFLAGS_VARIABLES: '{{.LDFLAGS_VERSION}} {{.LDFLAGS_REVISION}} {{.LDFLAGS_PRERELEASE}}'
   BUILDFLAGS: -trimpath -ldflags '-s -w -buildid= {{.LDFLAGS_VARIABLES}} -extldflags -static'
 
+  MATRIX_GOOS: ['darwin', 'linux', 'windows']
+  MATRIX_GOARCH: ['amd64', 'arm64']
+
 tasks:
   default:
     silent: true
@@ -68,7 +71,6 @@ tasks:
     - go tool cover -html=coverage.out -o coverage.html
 
   build:
-    run: once
     deps: [mod]
     sources:
     - '**/go.mod'
@@ -89,12 +91,29 @@ tasks:
     cmds:
     - go build {{.BUILDFLAGS}} -o bin/{{.BINNAME}}
 
+  build:release:
+    run: once
+    silent: true
+    cmds:
+    - for:
+        matrix:
+          GOOS:
+            ref: .MATRIX_GOOS
+          GOARCH:
+            ref: .MATRIX_GOARCH
+      vars:
+        GOOS: '{{.ITEM.GOOS}}'
+        GOARCH: '{{.ITEM.GOARCH}}'
+      task: build
+
   build:matrix:
     run: once
     silent: true
     cmds:
     - for:
         matrix:
-          GOOS: ['darwin', 'linux', 'windows']
-          GOARCH: ['amd64', 'arm64']
+          GOOS:
+            ref: .MATRIX_GOOS
+          GOARCH:
+            ref: .MATRIX_GOARCH
       cmd: echo '{{.ITEM.GOOS}}/{{.ITEM.GOARCH}}'
