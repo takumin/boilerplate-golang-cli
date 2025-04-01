@@ -1,7 +1,9 @@
-package subcommand
+package dummy
 
 import (
-	"github.com/urfave/cli/v2"
+	"context"
+
+	"github.com/urfave/cli/v3"
 
 	"github.com/takumin/boilerplate-golang-cli/internal/config"
 )
@@ -12,22 +14,22 @@ func NewCommands(cfg *config.Config, flags []cli.Flag) *cli.Command {
 			Name:        "variable",
 			Aliases:     []string{"v"},
 			Usage:       "variable",
-			EnvVars:     []string{"VARIABLE"},
+			Sources:     cli.EnvVars("VARIABLE"),
 			Value:       cfg.Variable,
 			Destination: &cfg.Variable,
 		},
 	}...)
 	return &cli.Command{
-		Name:    "subcommand",
-		Aliases: []string{"sub"},
-		Usage:   "subcommand",
+		Name:    "dummy",
+		Aliases: []string{"d"},
+		Usage:   "dummy",
 		Flags:   flags,
 		Action:  action(cfg),
 	}
 }
 
-func action(cfg *config.Config) func(ctx *cli.Context) error {
-	return func(ctx *cli.Context) error {
+func action(cfg *config.Config) func(ctx context.Context, cmd *cli.Command) error {
+	return func(ctx context.Context, cmd *cli.Command) error {
 		return nil
 	}
 }
