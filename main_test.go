@@ -35,8 +35,12 @@ func TestMainCommand(t *testing.T) {
 
 	main()
 
-	wo.Close()
-	we.Close()
+	if err := wo.Close(); err != nil {
+		t.Fatalf("failed stdout close error: %v", err)
+	}
+	if err := we.Close(); err != nil {
+		t.Fatalf("failed stderr close error: %v", err)
+	}
 
 	io.Copy(io.Discard, ro) //nolint:all
 	io.Copy(io.Discard, re) //nolint:all
