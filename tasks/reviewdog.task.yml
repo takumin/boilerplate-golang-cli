@@ -27,6 +27,15 @@ tasks:
     - ghalint-run
     - ghalint-act
 
+  reviewdog:
+    internal: true
+    cmds:
+    - >-
+      reviewdog
+      -runners '{{.REVIEWDOG_RUNNER}}'
+      -reporter '{{env "REVIEWDOG_REPORTER" | default "local"}}'
+      {{.REVIEWDOG_ARGS | join " "}}
+
   editorconfig-checker:
     run: once
     sources:
@@ -40,7 +49,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -58,7 +69,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -76,7 +89,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -92,7 +107,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -108,7 +125,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -126,7 +145,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -144,7 +165,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -162,13 +185,16 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
   golangci-lint:
     run: once
     sources:
+    - '.golangci.yml'
     - 'go.work'
     - '**/go.mod'
     - '**/go.sum'
@@ -180,7 +206,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -192,7 +220,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -204,7 +234,9 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
@@ -216,6 +248,8 @@ tasks:
     generates:
     - .task/.done_{{.TASK}}
     cmds:
-    - reviewdog -runners '{{splitList ":" .TASK | last}}' {{.REVIEWDOG_ARGS | join " "}}
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
