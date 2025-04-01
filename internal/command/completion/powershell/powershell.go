@@ -2,6 +2,7 @@ package powershell
 
 import (
 	"fmt"
+	"log/slog"
 	"strings"
 
 	"github.com/urfave/cli/v2"
@@ -27,7 +28,9 @@ func NewCommands(cfg *config.Config, flags []cli.Flag) *cli.Command {
 		Usage:    "powershell completion",
 		HideHelp: true,
 		Action: func(ctx *cli.Context) error {
-			fmt.Fprint(ctx.App.Writer, strings.TrimSpace(powershellCompletion)+"\n")
+			if _, err := fmt.Fprint(ctx.App.Writer, strings.TrimSpace(powershellCompletion)+"\n"); err != nil {
+				slog.ErrorContext(ctx.Context, "failed to powershell completion fprint error", slog.Any("error", err))
+			}
 			return nil
 		},
 	}
