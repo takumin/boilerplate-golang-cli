@@ -2,6 +2,7 @@ package fish
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/urfave/cli/v2"
 
@@ -18,7 +19,9 @@ func NewCommands(cfg *config.Config, flags []cli.Flag) *cli.Command {
 			if err != nil {
 				return err
 			}
-			fmt.Fprint(ctx.App.Writer, fish)
+			if _, err := fmt.Fprint(ctx.App.Writer, fish); err != nil {
+				slog.ErrorContext(ctx.Context, "failed to fish completion fprint error", slog.Any("error", err))
+			}
 			return nil
 		},
 	}
