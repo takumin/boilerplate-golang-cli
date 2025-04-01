@@ -3,7 +3,7 @@ package completion_test
 import (
 	"testing"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/takumin/boilerplate-golang-cli/internal/command/completion"
 	"github.com/takumin/boilerplate-golang-cli/internal/config"

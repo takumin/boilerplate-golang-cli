@@ -1,7 +1,7 @@
 package subcommand
 
 import (
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/takumin/boilerplate-golang-cli/internal/config"
 )

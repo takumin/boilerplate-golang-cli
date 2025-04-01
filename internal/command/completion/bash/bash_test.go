@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/urfave/cli/v2"
+	"github.com/urfave/cli/v3"
 
 	"github.com/takumin/boilerplate-golang-cli/internal/command/completion/bash"
 	"github.com/takumin/boilerplate-golang-cli/internal/config"
