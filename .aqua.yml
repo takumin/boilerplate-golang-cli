@@ -4,23 +4,4 @@
 registries:
 - type: standard
   ref: v4.338.0 # renovate: depName=aquaproj/aqua-registry
-packages:
-- name: golang/go@go1.24.2
-- name: golangci/golangci-lint@v2.0.2
-- name: securego/gosec@v2.22.3
-- name: reviewdog/reviewdog@v0.20.3
-- name: mvdan/sh@v3.11.0
-- name: koalaman/shellcheck@v0.10.0
-- name: rhysd/actionlint@v1.7.7
-- name: rust-lang/mdBook@v0.4.48
-- name: takumin/gjson@v0.0.3
-- name: aquasecurity/trivy@v0.61.0
-- name: takumin/gyaml@v0.0.2
-- name: editorconfig-checker/editorconfig-checker@v3.2.1
-- name: oven-sh/bun@bun-v1.2.8
-- name: k1LoW/octocov@v0.65.1
-- name: google/yamlfmt@v0.16.0
-- name: suzuki-shunsuke/ghalint@v1.3.0
-- name: suzuki-shunsuke/pinact@v3.0.2
-- name: go-task/task@v3.42.1
-- name: evilmartians/lefthook@v1.11.6
+import_dir: .aqua/pkgs
