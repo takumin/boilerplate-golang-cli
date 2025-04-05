@@ -25,6 +25,8 @@ tasks:
     run: once
     sources:
     - .aqua.yml
+    - .aqua/*.yml
+    - .aqua/**/*.yml
     generates:
     - .task/.done_{{.TASK}}
     cmds:
