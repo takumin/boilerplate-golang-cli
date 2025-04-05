@@ -32,7 +32,7 @@ jobs:
           application:
           - '.github/actions/setup-aqua/action.yaml'
           - '.github/workflows/application.yml'
-          - '.aqua.yaml'
+          - '.aqua.yml'
           - '.octocov.yml'
           - 'Taskfile.yml'
           - 'tasks/**.task.yml'

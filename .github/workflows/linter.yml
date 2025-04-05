@@ -55,7 +55,7 @@ jobs:
           - 'package.json'
           aqua:
           - '.github/actions/setup-aqua/action.yaml'
-          - '.aqua.yaml'
+          - '.aqua.yml'
           renovate:
           - '.renovaterc.json'
           reviewdog:
