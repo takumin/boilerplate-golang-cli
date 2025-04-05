@@ -8,7 +8,7 @@ runs:
     id: cache-primes-restore
     uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
     with:
-      key: aqua-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('**/.aqua.yaml') }}
+      key: aqua-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.?aqua.ya?ml') }}
       path: |-
         ~/.local/share/aquaproj-aqua
   - name: Setup Aqua
