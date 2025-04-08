@@ -12,7 +12,7 @@ runs:
     id: cache-primes-restore
     uses: actions/cache/restore@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
     with:
-      key: bun-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('bun.lock', '.aqua/pkgs/bun.yaml') }}
+      key: bun-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('bun.lock', 'aqua/pkgs/bun.yaml') }}
       path: |
         ${{ steps.bun.outputs.cache-dir }}
         **/node_modules

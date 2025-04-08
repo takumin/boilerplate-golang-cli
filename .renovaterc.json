@@ -3,8 +3,8 @@
 	"extends": [
 		"config:best-practices",
 		"github>aquaproj/aqua-renovate-config#2.7.5",
-		"github>aquaproj/aqua-renovate-config:file#2.7.5(.aqua/.*\\.ya?ml)",
-		"github>aquaproj/aqua-renovate-config:file#2.7.5(.aqua/pkgs/.*\\.ya?ml)"
+		"github>aquaproj/aqua-renovate-config:file#2.7.5(aqua/.*\\.ya?ml)",
+		"github>aquaproj/aqua-renovate-config:file#2.7.5(aqua/pkgs/.*\\.ya?ml)"
 	],
 	"timezone": "Asia/Tokyo",
 	"automerge": true,
