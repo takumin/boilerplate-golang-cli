@@ -32,9 +32,8 @@ jobs:
           application:
           - '.github/actions/setup-aqua/action.yaml'
           - '.github/workflows/application.yml'
-          - '.aqua.yml'
-          - '.aqua/*.yml'
-          - '.aqua/**/*.yml'
+          - 'aqua/*.yaml'
+          - 'aqua/**/*.yaml'
           - '.octocov.yml'
           - 'Taskfile.yml'
           - 'tasks/**.task.yml'
