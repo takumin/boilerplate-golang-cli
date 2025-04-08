@@ -4,4 +4,4 @@
 registries:
 - type: standard
   ref: v4.341.0 # renovate: depName=aquaproj/aqua-registry
-import_dir: .aqua/pkgs
+import_dir: pkgs
