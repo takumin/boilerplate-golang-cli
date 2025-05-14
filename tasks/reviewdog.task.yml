@@ -26,6 +26,7 @@ tasks:
     - actionlint
     - ghalint-run
     - ghalint-act
+    - zizmor
 
   reviewdog:
     internal: true
@@ -241,6 +242,20 @@ tasks:
       silent: true
 
   ghalint-act:
+    run: once
+    sources:
+    - '.github/**/*.yml'
+    - '.github/**/*.yaml'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - task: reviewdog
+      vars:
+        REVIEWDOG_RUNNER: '{{splitList ":" .TASK | last}}'
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  zizmor:
     run: once
     sources:
     - '.github/**/*.yml'
