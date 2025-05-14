@@ -45,3 +45,6 @@ runner:
     - '%\s%+%l: %m'
     - '%-Q'
     - '%-G%.%#'
+  zizmor:
+    cmd: zizmor --quiet --no-progress --format=sarif .
+    format: sarif

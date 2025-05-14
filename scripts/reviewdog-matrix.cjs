@@ -4,6 +4,7 @@ module.exports = ({ context, changes }) => {
 		targets.push("actionlint");
 		targets.push("ghalint-run");
 		targets.push("ghalint-act");
+		targets.push("zizmor");
 	}
 	if (json({ context, changes })) {
 		targets.push("gjson-validate");
