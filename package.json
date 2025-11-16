@@ -1,6 +1,6 @@
 {
 	"dependencies": {},
 	"devDependencies": {
-		"renovate": "42.2.0"
+		"renovate": "42.11.0"
 	}
 }
