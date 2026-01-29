@@ -146,13 +146,13 @@ jobs:
       run: echo GOMODCACHE='${{ env.GOPATH }}/pkg/mod' >> "$GITHUB_ENV"
     - name: Restore Go Mod Cache
       id: mod-cache-primes-restore
-      uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         key: go-mod-${{ steps.go.outputs.version }}-${{ hashFiles('**/go.sum') }}
         path: ${{ env.GOMODCACHE }}
     - name: Restore Go Build Cache
       id: build-cache-primes-restore
-      uses: actions/cache/restore@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         key: go-build-${{ steps.go.outputs.version }}-${{ env.GOOS }}-${{ env.GOARCH }}-${{ hashFiles('**/go.sum') }}
         path: ${{ env.GOCACHE }}
@@ -177,13 +177,13 @@ jobs:
       run: echo default_branch_ref_name="$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)" >> "$GITHUB_OUTPUT"
     - name: Save Go Mod Cache
       if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.mod-cache-primes-restore.outputs.cache-hit != 'true'
-      uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         key: ${{ steps.mod-cache-primes-restore.outputs.cache-primary-key }}
         path: ${{ env.GOMODCACHE }}
     - name: Save Go Build Cache
       if: github.ref_name == steps.gh.outputs.default_branch_ref_name && steps.build-cache-primes-restore.outputs.cache-hit != 'true'
-      uses: actions/cache/save@8b402f58fbc84540c8b491a91e594a4576fec3d7 # v5.0.2
+      uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
       with:
         key: ${{ steps.build-cache-primes-restore.outputs.cache-primary-key }}
         path: ${{ env.GOCACHE }}
