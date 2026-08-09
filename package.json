@@ -1,6 +1,6 @@
 {
 	"dependencies": {},
 	"devDependencies": {
-		"renovate": "44.4.3"
+		"renovate": "44.14.3"
 	}
 }
