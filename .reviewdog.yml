@@ -39,7 +39,7 @@ runner:
     cmd: golangci-lint run --output.text.path stdout ./...
     format: golangci-lint
   editorconfig-checker:
-    cmd: ec -no-color
+    cmd: editorconfig-checker -no-color
     errorformat:
     - '%-G%+P%f:'
     - '%\s%+%l: %m'
