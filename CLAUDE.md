@@ -30,3 +30,7 @@
 - Return errors with context
 - Use exit codes for command-line errors
 - Test error paths with mocked functions
+
+## Pull Requests
+- Enable auto-merge right after creating a PR: `gh pr merge <number> --auto --merge`
+- If auto-merge is refused because the PR is already mergeable, report it and ask before merging directly
