@@ -19,6 +19,3 @@ indent_style = space
 
 [{LICENSE,*.md}]
 indent_style = unset
-
-[bun.lock]
-indent_style = space
