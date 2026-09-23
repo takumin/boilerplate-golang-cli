@@ -20,7 +20,6 @@ jobs:
     outputs:
       github-actions: ${{ steps.changes.outputs.github-actions }}
       linter-actions: ${{ steps.changes.outputs.linter-actions }}
-      bun: ${{ steps.changes.outputs.bun }}
       aqua: ${{ steps.changes.outputs.aqua }}
       renovate: ${{ steps.changes.outputs.renovate }}
       reviewdog: ${{ steps.changes.outputs.reviewdog }}
@@ -49,10 +48,6 @@ jobs:
           linter-actions:
           - '.github/workflows/integration.yml'
           - '.github/workflows/linter.yml'
-          bun:
-          - '.github/actions/setup-bun/action.yaml'
-          - 'bun.lock'
-          - 'package.json'
           aqua:
           - '.github/actions/setup-aqua/action.yaml'
           - 'aqua/*.yaml'
@@ -99,7 +94,6 @@ jobs:
         github.ref_name == 'release' ||
         startsWith(github.ref_name, 'releases/') == 'true' ||
         needs.changes.outputs.linter-actions == 'true' ||
-        needs.changes.outputs.bun == 'true' ||
         needs.changes.outputs.aqua == 'true' ||
         needs.changes.outputs.renovate == 'true'
       }}
@@ -110,10 +104,8 @@ jobs:
         persist-credentials: false
     - name: Setup Aqua
       uses: ./.github/actions/setup-aqua
-    - name: Setup Bun
-      uses: ./.github/actions/setup-bun
     - name: Renovate Config Validator
-      run: bun run renovate-config-validator --strict
+      run: jv https://docs.renovatebot.com/renovate-schema.json .renovaterc.json
   ##############################################################################
   # Reviewdog Matrix
   ##############################################################################
