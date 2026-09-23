@@ -143,7 +143,7 @@ jobs:
     - name: Go Env (GOCACHE)
       run: echo GOCACHE="${HOME}/.cache/go-build" >> "$GITHUB_ENV"
     - name: Go Env (GOMODCACHE)
-      run: echo GOMODCACHE='${{ env.GOPATH }}/pkg/mod' >> "$GITHUB_ENV"
+      run: echo GOMODCACHE="${GOPATH}/pkg/mod" >> "$GITHUB_ENV"
     - name: Restore Go Mod Cache
       id: mod-cache-primes-restore
       uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
