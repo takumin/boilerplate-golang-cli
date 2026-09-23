@@ -25,14 +25,12 @@ pre-commit:
       glob: "*.{sh,bash}"
       run: shellcheck {staged_files}
       stage_fixed: true
-    gjson-validate:
+    biome:
       glob: "*.{json}"
-      run: gjson validate {staged_files}
-      stage_fixed: true
-    gyaml-validate:
+      run: biome lint --no-errors-on-unmatched {staged_files}
+    yamllint:
       glob: "*.{yaml,yml}"
-      run: gyaml validate {staged_files}
-      stage_fixed: true
+      run: yamllint {staged_files}
     yamlfmt:
       glob: "*.{yaml,yml}"
       run: yamlfmt {staged_files}

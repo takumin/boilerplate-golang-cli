@@ -15,8 +15,8 @@ tasks:
     silent: true
     deps:
     - editorconfig-checker
-    - gjson-validate
-    - gyaml-validate
+    - biome
+    - yamllint
     - shfmt
     - shellcheck
     - gofmt
@@ -56,17 +56,16 @@ tasks:
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  gjson-validate:
+  biome:
     run: once
     sources:
+    - 'biome.json'
     - '**/*.json'
-    - '**/*.json.golden'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
     - exclude: 'bin/**/*'
     - exclude: 'dist/**/*'
     - exclude: '**/*.invalid.json'
-    - exclude: '**/*.invalid.json.golden'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -76,9 +75,10 @@ tasks:
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  gyaml-validate:
+  yamllint:
     run: once
     sources:
+    - '.yamllint.yml'
     - '**/*.yml'
     - '**/*.yaml'
     - exclude: '.git/**/*'

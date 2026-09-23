@@ -7,10 +7,10 @@ module.exports = ({ context, changes }) => {
 		targets.push("zizmor");
 	}
 	if (json({ context, changes })) {
-		targets.push("gjson-validate");
+		targets.push("biome");
 	}
 	if (yaml({ context, changes })) {
-		targets.push("gyaml-validate");
+		targets.push("yamllint");
 	}
 	if (shell({ context, changes })) {
 		targets.push("shellcheck");

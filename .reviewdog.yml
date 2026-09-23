@@ -6,12 +6,12 @@ runner:
   shellcheck:
     cmd: shellcheck -f checkstyle $(find '.' -type f -a \( -name '*.sh' -o -name '*.bash' \) -print)
     format: checkstyle
-  gjson-validate:
-    cmd: gjson validate .
-    format: rdjsonl
-  gyaml-validate:
-    cmd: gyaml validate .
-    format: rdjsonl
+  biome:
+    cmd: biome lint --reporter=rdjson . 2>/dev/null
+    format: rdjson
+  yamllint:
+    cmd: yamllint -f parsable .
+    format: yamllint
   actionlint:
     cmd: actionlint -oneline
     errorformat:
