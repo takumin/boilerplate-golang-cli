@@ -1,7 +1,6 @@
 /.claude/worktrees/
+/.claude/settings.local.json
 /.task/
-/bin/
+/coverage/
 /dist/
 /book/
-coverage.html
-coverage.out

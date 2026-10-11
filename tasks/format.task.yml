@@ -4,21 +4,37 @@
 
 version: '3'
 
+includes:
+  tool:
+    taskfile: tool.task.yml
+    internal: true
+
 tasks:
   default:
+    desc: '{{.TASK}}'
     silent: true
-    deps:
-    - shfmt
-    - yamlfmt
-    - gofmt
+    cmds:
+    - task: shfmt
+    - task: yamlfmt
+    - task: taplo
+    - task: pinact
+    - task: gomod
+    - task: gofmt
 
   shfmt:
-    run: once
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: tool:aqua:tag:shfmt
     sources:
     - '**/*.sh'
     - '**/*.bash'
+    - '.*/**/*.sh'
+    - '.*/**/*.bash'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'coverage/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -27,12 +43,21 @@ tasks:
       silent: true
 
   yamlfmt:
-    run: once
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: tool:aqua:tag:yamlfmt
     sources:
+    - '.*.yml'
+    - '.*.yaml'
     - '**/*.yml'
     - '**/*.yaml'
+    - '.*/**/*.yml'
+    - '.*/**/*.yaml'
     - exclude: '.git/**/*'
     - exclude: '.task/**/*'
+    - exclude: 'coverage/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
@@ -40,12 +65,72 @@ tasks:
     - cmd: touch .task/.done_{{.TASK}}
       silent: true
 
-  gofmt:
-    run: once
+  taplo:
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: tool:aqua:tag:taplo
     sources:
-    - '**/go.mod'
-    - '**/go.sum'
+    - '.*.toml'
+    - '**/*.toml'
+    - '.*/**/*.toml'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    - exclude: 'coverage/**/*'
+    - exclude: 'dist/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - taplo format 2>/dev/null
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  pinact:
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: tool:aqua:tag:pinact
+    sources:
+    - '.github/**/*.yml'
+    - '.github/**/*.yaml'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - pinact run
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  gomod:
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: tool:aqua:tag:go
+    sources:
+    - 'go.mod'
+    - 'go.sum'
     - '**/*.go'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    - exclude: 'coverage/**/*'
+    - exclude: 'dist/**/*'
+    generates:
+    - .task/.done_{{.TASK}}
+    cmds:
+    - go mod tidy
+    - cmd: touch .task/.done_{{.TASK}}
+      silent: true
+
+  gofmt:
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: tool:aqua:tag:go
+    sources:
+    - '**/*.go'
+    - exclude: '.git/**/*'
+    - exclude: '.task/**/*'
+    - exclude: 'coverage/**/*'
+    - exclude: 'dist/**/*'
     generates:
     - .task/.done_{{.TASK}}
     cmds:
