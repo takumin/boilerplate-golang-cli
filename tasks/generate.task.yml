@@ -4,17 +4,26 @@
 
 version: '3'
 
+includes:
+  setup:
+    taskfile: setup.task.yml
+    internal: true
+
 tasks:
   default:
+    desc: '{{.TASK}}'
     silent: true
-    deps:
-    - gogen
+    cmds:
+    - task: go
 
-  gogen:
-    run: once
+  go:
+    desc: '{{.TASK}}'
+    dir: '{{.ROOT_DIR}}'
+    deps:
+    - task: setup:test
     sources:
-    - '**/go.mod'
-    - '**/go.sum'
+    - 'go.mod'
+    - 'go.sum'
     - '**/*.go'
     - exclude: '**/*_test.go'
     generates:

@@ -5,42 +5,25 @@
 version: '3'
 
 includes:
-  generate: ./tasks/generate.task.yml
-  style: ./tasks/style.task.yml
+  tool: ./tasks/tool.task.yml
+  setup: ./tasks/setup.task.yml
   format: ./tasks/format.task.yml
+  generate: ./tasks/generate.task.yml
   reviewdog: ./tasks/reviewdog.task.yml
-  app: ./tasks/app.task.yml
+  audit: ./tasks/audit.task.yml
+  test: ./tasks/test.task.yml
+  coverage: ./tasks/coverage.task.yml
+  build: ./tasks/build.task.yml
 
 tasks:
   default:
+    desc: '{{.TASK}}'
     silent: true
-    deps: [aqua]
+    aliases: [all]
     cmds:
-    - task: generate
-    - task: style
+    - task: tool
     - task: format
+    - task: generate
     - task: reviewdog
-    - task: app
-  aqua:
-    run: once
-    sources:
-    - aqua/*.yaml
-    - aqua/**/*.yaml
-    generates:
-    - .task/.done_{{.TASK}}
-    cmds:
-    - aqua install --all
-    - cmd: touch .task/.done_{{.TASK}}
-      silent: true
-  test:
-    silent: true
-    deps:
-    - task: app:{{.TASK}}
-  build:
-    silent: true
-    deps:
-    - task: app:{{.TASK}}
-  clean:
-    silent: true
-    deps:
-    - task: app:{{.TASK}}
+    - task: test
+    - task: build

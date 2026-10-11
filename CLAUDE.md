@@ -1,11 +1,13 @@
 # Development Guide
 
 ## Build Commands
-- `task` - Run all tasks (generate, style, format, reviewdog, app)
-- `task app:build` - Build the application
-- `task app:test` - Run all tests with race detection and coverage
-- `task format` - Format code (gofmt, shfmt, yamlfmt)
-- `task reviewdog` - Run linters (golangci-lint, govet, gosec, etc.)
+- `task` - Run all tasks (tool, format, generate, reviewdog, test, build)
+- `task build` - Build the application for the host (`BUILD_TARGET=<goos>-<goarch>` to cross-compile)
+- `task test` - Run all tests with race detection
+- `task coverage` - Generate coverage report into `coverage/`
+- `task audit` - Scan for known vulnerabilities (govulncheck)
+- `task format` - Format code (shfmt, yamlfmt, taplo, pinact, go mod tidy, gofmt)
+- `task reviewdog` - Run linters (golangci-lint, govet, gosec, jactionlint, zizmor, etc.)
 - Single test: `go test -race -cover ./path/to/package -run TestName`
 
 ## Code Style
